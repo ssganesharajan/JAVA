@@ -1,0 +1,353 @@
+2D Array
+
+Diagonal => Row = Column
+0,0  0,1  0,2
+1,0  1,1  1,2
+2,0  2,1  2,2
+
+import java.util.*;
+public class Main{
+    public static void main(String Arg[]){
+        int i,j,r,c;
+        Scanner sc=new Scanner(System.in);
+
+        System.out.println("Enter Row:");
+        r = sc.nextInt();
+
+        System.out.println("Enter Column:");
+        c = sc.nextInt();
+
+        int ar[][]=new int [r][c];
+
+        System.out.println("Enter array:");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                ar[i][j]=sc.nextInt();
+            }
+        }
+
+        System.out.println("Entered array is: ");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                System.out.print(ar[i][j]+" ");
+            }
+            System.out.println(" ");
+        }
+    }
+}
+
+---
+
+//Addition, Subtraction matrix
+import java.util.*;
+public class Main{
+    public static void main(String Arg[]){
+        int i,j,r,c;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter Row:");
+        r = sc.nextInt();
+        System.out.println("Enter Column:");
+        c = sc.nextInt();
+        int ar1[][]=new int [r][c];
+        int ar2[][]=new int [r][c];
+        int sum[][]=new int [r][c];
+        System.out.println("Enter First array:");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                ar1[i][j]=sc.nextInt();
+            }
+        }
+        System.out.println("Enter Second array:");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                ar2[i][j]=sc.nextInt();
+            }
+        }
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                sum[i][j]=ar1[i][j]+ar2[i][j];
+            }
+        }
+        System.out.println("Addition of array is: ");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                System.out.print(sum[i][j]+" ");
+            }
+            System.out.println(" ");
+        }
+    }
+}
+
+---
+
+//Multiplication matrix
+//2x3,3x7 can be multiple. 3x2,3x3 can't be multiple
+import java.util.*;
+public class Main{
+    public static void main(String Arg[]){
+        int i,j,k,r1,c1,r2,c2;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter Row1:");
+        r1 = sc.nextInt();
+        System.out.println("Enter Column1:");
+        c1 = sc.nextInt();
+        int ar1[][]=new int [r1][c1];
+        System.out.println("Enter array1:");
+        for(i=0;i<r1;i++){
+            for(j=0;j<c1;j++){
+                ar1[i][j]=sc.nextInt();
+            }
+        }
+        System.out.println("Enter Row2:");
+        r2 = sc.nextInt();
+        System.out.println("Enter Column2:");
+        c2 = sc.nextInt();
+        int ar2[][]=new int [r2][c2];
+        System.out.println("Enter array2:");
+        for(i=0;i<r2;i++){
+            for(j=0;j<c2;j++){
+                ar2[i][j]=sc.nextInt();
+            }
+        }
+        int mul[][]=new int [r1][c2];
+        for(i=0;i<r1;i++){
+            for(j=0;j<c2;j++){
+                for(k=0;k<c1;k++)
+                mul[i][j]+=ar1[i][k]*ar2[k][j];
+            }
+        }
+        System.out.println("Multiplication of array is: ");
+        for(i=0;i<r1;i++){
+            for(j=0;j<c2;j++){
+                System.out.print(mul[i][j]+" ");
+            }
+            System.out.println(" ");
+        }
+    }
+}
+
+---
+
+//Primary Diagonal
+import java.util.*;
+public class Main{
+    public static void main(String Arg[]){
+        int i,j,r,c;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter Row:");
+        r = sc.nextInt();
+        System.out.println("Enter Column:");
+        c = sc.nextInt();
+        int ar[][]=new int [r][c];
+        System.out.println("Enter array:");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                ar[i][j]=sc.nextInt();
+            }
+        }
+        System.out.println("Primary Diagonal array elemens are: ");
+        // for(i=0;i<r;i++){
+        //     for(j=0;j<c;j++){
+        //         if(ar[i]==ar[j]){
+        //             System.out.print(ar[i][j]);
+        //         }
+        //     }
+        //     System.out.println(" ");
+        // }
+        for(i=0;i<r;i++){
+            System.out.print(ar[i][i]+" ");
+        }
+    }
+}
+
+---
+
+//Secondary Diagonal
+import java.util.*;
+public class Main{
+    public static void main(String Arg[]){
+        int i,j,r,c;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter Row:");
+        r = sc.nextInt();
+        System.out.println("Enter Column:");
+        c = sc.nextInt();
+        int ar[][]=new int [r][c];
+        System.out.println("Enter array:");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                ar[i][j]=sc.nextInt();
+            }
+        }
+        System.out.println("Secondary Diagonal elemens are: ");
+        for(i=0;i<r;i++){
+            System.out.print(ar[i][r-1-i]+" ");
+        }
+    }
+}
+
+---
+
+//Sum of secondary diagonal
+import java.util.*;
+public class Main{
+    public static void main(String Arg[]){
+        int i,j,r,c;
+        Scanner sc=new Scanner(System.in);
+        
+        System.out.println("Enter Row:");
+        r = sc.nextInt();
+        
+        System.out.println("Enter Column:");
+        c = sc.nextInt();
+        
+        int ar[][]=new int [r][c];
+        
+        System.out.println("Enter array:");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                ar[i][j]=sc.nextInt();
+            }
+        }
+        
+        int sum=0;
+        
+        System.out.println("Secondary Diagonal elemens are: ");
+        for(i=0;i<r;i++){
+            sum+=ar[i][r-1-i];
+            System.out.print(ar[i][r-1-i]+" ");
+            System.out.println("");
+        }
+        System.out.println("Sum of diagonal: "+sum);
+    }
+}
+
+---
+
+//Transpose matrix
+import java.util.*;
+public class Main{
+    public static void main(String Arg[]){
+        int i,j,r,c;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter Row:");
+        r = sc.nextInt();
+        System.out.println("Enter Column:");
+        c = sc.nextInt();
+        int ar[][]=new int [r][c];
+        System.out.println("Enter array:");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                ar[i][j]=sc.nextInt();
+            }
+        }
+        System.out.println("Transpose matrix elemens are: ");
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                System.out.print(ar[j][i]);
+            }
+            System.out.println(" ");
+        }
+    }
+}
+
+---
+
+Array rotation:
+
+1. Interchanging the position
+temp=1
+for(i=o;i<=a.length;i++)
+a[i]=a[i+1]
+a[a.length-1]=temp
+
+//left rortation
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        int arr[] = {1, 2, 3, 4, 5};
+
+        int first = arr[0];
+
+        for (int i = 0; i < arr.length - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+
+        arr[arr.length - 1] = first;
+
+        //System.out.println(Arrays.toString(arr));
+
+	for(int i = 0; i < arr.length; i++) {
+    System.out.print(arr[i] + " ");
+}
+    }
+}
+
+---
+
+//Right rotation
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        int arr[] = {1, 2, 3, 4, 5};
+
+        int last = arr[arr.length - 1];
+
+        for (int i = arr.length - 1; i > 0; i--) {
+            arr[i] = arr[i - 1];
+        }
+
+        arr[0] = last;
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
+---
+
+Interview specific
+a={1,2,3,4,5}
+left=0 -> left++
+right=n-1 -> right--
+(low + high)/2
+{5,2,3,4,1}
+{5,4,3,2,1}
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        int a[] = {1, 2, 3, 4, 5};
+
+        int left = 0;
+        int right = a.length - 1;
+
+        while (left < right) {
+            int temp = a[left];
+            a[left] = a[right];
+            a[right] = temp;
+
+            left++;
+            right--;
+        }
+
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + " ");
+        }
+    }
+}
+
+---
+
+Left rotation
+formula= (i-k+n)%n
+
+---
+
+if(System.out.append("Hello ")==null){
+System.out.print("Hello");}else{
+System.out.print("World");
+}
+
+---

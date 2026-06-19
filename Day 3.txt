@@ -1,0 +1,270 @@
+add in list :
+    
+    import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        LinkedList<String> list = new LinkedList<>();
+        System.out.println("List before adding Programming Languages: "+list.size());
+        System.out.println("Programming Languages");
+        list.add("C");
+        list.add("C++");
+        list.add("Java");
+        list.add("Python");
+        list.add("Jython");
+        list.add(2,"Naveen");
+        System.out.println(list+"\n");
+        System.out.println("List after adding Programming Languages: "+list.size());
+        System.out.println("List before adding Databases: "+list.size());
+        System.out.println("Databases");
+        list.add("My SQL");
+        list.add("PostgreSQL");
+        list.add("SQL Lite");
+        list.add("MongoDB");
+        list.add("Firebase");
+        System.out.println(list);
+        System.out.println("List after adding Databases: "+list.size());
+        list.remove(2);
+        System.out.println(list);
+    }
+}
+
+output:-
+    
+List before adding Programming Languages: 0
+Programming Languages
+[C, C++, Naveen, Java, Python, Jython]
+
+List after adding Programming Languages: 6
+List before adding Databases: 6
+Databases
+[C, C++, Naveen, Java, Python, Jython, My SQL, PostgreSQL, SQL Lite, MongoDB, Firebase]
+List after adding Databases: 11
+[C, C++, Java, Python, Jython, My SQL, PostgreSQL, SQL Lite, MongoDB, Firebase]
+___________________________________________________________________________________________________________________________________________________________
+ Vector List:-
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+    Vector<Integer> v = new Vector<Integer>();
+    Vector<String> n = new Vector<String>(); 
+    v.add(2804);
+    n.add("Important Dates ");
+    v.add(2225);
+    System.out.println(v);
+    System.out.println(n);
+    }
+}
+
+Output:-
+
+[2804, 2225]
+[Important Dates ]
+____________________________________________________________________________________________________________________________________________________________
+Stack:-
+
+import java.util.*;
+public class Main{
+    public static void main(String args[]){
+        Stack<Integer> s = new Stack<Integer>();
+        s.push(10);
+        s.push(20);
+        System.out.println(s);
+        s.pop();
+        System.out.println(s);
+    }
+}
+
+
+output:-
+ 
+[10, 20]
+[10]
+____________________________________________________________________________________________________________________________________________________________
+
+PriorityQueue:
+
+import java.util.*;
+public class Main{
+    public static void main(String args[]){
+        PriorityQueue<Integer> s = new PriorityQueue<Integer>();
+        s.add(10);
+        s.add(20);
+        System.out.println("before removing :- "+s);
+        s.remove(20);
+        
+        System.out.println("after removing :- "+s);
+    }
+}
+
+OUTPUT:-
+
+before removing :- [10, 20]
+after removing :- [10]
+____________________________________________________________________________________________________________________________________________________________
+
+Hashset - after creating the hash it create a index to store data which is non sequential fetch data by index  and no duplicates
+
+linkedhashset - have null value
+
+hashmap - can have duplicate data but no duplicate keys allowed 
+____________________________________________________________________________________________________________________________________________________________
+
+
+Hashset:-
+
+import java.util.*;
+public class Main{
+    public static void main(String args[]){
+       HashSet<String> hs = new HashSet<String>();
+       hs.add("Placement");
+       hs.add("Jolly");
+       hs.add("sallary");
+       hs.add("Fun");
+       System.out.println(hs);
+       hs.remove("Fun");
+       System.out.println("after removing : "+hs);
+       
+       
+    }
+}
+
+output:-
+ 
+[Jolly, Placement, sallary, Fun]
+after removing : [Jolly, Placement, sallary]
+________________________________________________________________________________________________________________________________________________________
+
+Treeset:-
+
+[to print the unordered data in order we use treeset which store in order]
+
+import java.util.*;
+public class Main{
+    public static void main(String args[]){
+       Set<String> hs = new TreeSet<String>();
+       hs.add("Placement");
+       hs.add("Jolly");
+       hs.add("sallary");
+       hs.add("Fun");
+       System.out.println(hs);
+       hs.remove("Fun");
+          
+       
+    }
+}
+
+output:-
+[Fun, Jolly, Placement, sallary]
+                                     // the output is in alphabetical order//
+__________________________________________________________________________________________________________________________________________________________
+
+HashMap:-
+
+import java.util.*;
+public class Main{
+    public static void main(String args[]){
+       HashMap<Integer,String> hs = new HashMap<Integer,String>();
+       hs.put(1,"Placement");
+       hs.put(1,"Jolly");
+       hs.put(2,"sallary");
+       hs.put(3,"Fun");
+       System.out.println(hs);
+      System.out.println("Paticular value:- "+hs.get(1));
+          
+       
+    }
+}
+
+output:-
+
+{1=Jolly, 2=sallary, 3=Fun}
+Paticular value:- Jolly
+___________________________________________________________________________________________________________________________________________________________
+
+Encapsulation:
+
+import java.util.*;
+
+class Student {
+	private String dept;
+	private String number;
+	private int dob;
+
+	public void setDept(String dept) {
+		this.dept = dept;
+	}
+	public void setMobileNumber(String number) {
+		this.number = number;
+	}
+	public void setDob(int dob) {
+		this.dob = dob;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public int getDob() {
+		return dob;
+	}
+	public String getDept() {
+		return dept;
+	}
+}
+public class Main {
+	public static void main(String[] args) {
+		Student s = new Student();
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Enter Your DEPT:- ");
+		s.setDept(sc.next());
+		System.out.println("Enter your Mobile number:- ");
+		s.setMobileNumber(sc.next());
+		System.out.println("Enter your D.O.B:- ");
+		s.setDob(sc.nextInt());
+		System.out.println("Mobile Number: " + s.getNumber());
+		System.out.println("Date of Birth: " + s.getDob());
+		System.out.println("Department: " + s.getDept());
+	}
+}
+
+
+
+output:-
+
+Enter Your DEPT:- 
+CSE
+Enter your Mobile number:- 
+8140707090
+Enter your D.O.B:- 
+4/8/2006
+____________________________________________________________________________________________________________________________________________________________
+
+multilevel inheritance:-
+   class hotel {
+  public void displayidly() {
+    System.out.println("IDLY SAMBAR");
+  }
+}
+class Ingredients extends hotel {
+  public void displaybriyani() {
+    System.out.println("Briyani");
+  }
+}
+class Menu extends Ingredients {
+  public void displaygrill() {
+    System.out.println("Grill");
+  }
+}
+class Main {
+  public static void main(String[] args) {
+    Menu m = new Menu();
+    m.displayidly();
+    m.displaybriyani();
+    m.displaygrill();
+  }
+}
+
+output:-
+
+IDLY SAMBAR
+Briyani
+Grill
