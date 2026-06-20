@@ -1,0 +1,496 @@
+Linked List:
+
+Insertion has three types:
+Insert@begining
+Insert@end
+Insert@position
+
+---
+
+class Node{ // class
+    int data;
+    Node next;
+Node(int data){ // method
+    this.data=data; // this. means current instance
+    this.next=null;
+}}
+
+public class Main{
+    public static void main(String args[]){
+        // Create three nodes
+        Node first=new Node(10);
+        Node second=new Node(20);
+        Node third=new Node(30);
+        
+        //linking nodes
+        first.next=second;
+        second.next=third;
+        
+        Node head=first;
+        
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.data+"->");
+            temp=temp.next;
+        }
+        System.out.print("Null");
+    }
+}
+
+---
+
+//insert@begin
+class Node{ // class
+    int data;
+    Node next;
+Node(int data){ // method
+    this.data=data; // this. means current instance
+    this.next=null;
+}}
+
+public class Main{
+    public static void main(String args[]){
+        Node head=new Node(20);
+        head.next=new Node(30);
+
+        Node newNode=new Node(10);
+        
+        newNode.next=head;
+        head=newNode;
+        
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.data+"->");
+            temp=temp.next;
+        }
+        System.out.println("Null");
+        System.out.print(head.next.data);
+    }
+}
+
+---
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+
+        Node head = new Node(20);
+        head.next = new Node(30);
+        head.next.next = new Node(40);
+        head.next.next.next = new Node(50);
+
+        // New node to insert at end
+        Node newNode = new Node(60);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+
+            // Move to the last node
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+
+            // Insert at end
+            temp.next = newNode;
+        }
+
+        // Display linked list
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("NULL");
+    }
+}
+
+---
+
+//insert at position
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+        Node head = new Node(20);
+        head.next = new Node(30);
+        head.next.next = new Node(50);
+
+        int pos = 3;
+        Node newNode = new Node(40);
+
+            Node temp = head;
+            for (int i = 1; i < pos - 1; i++) {
+                temp = temp.next;
+            }
+            newNode.next=temp.next;
+            temp.next=newNode;
+            temp=head;
+            int c=0;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+            c++;
+        }
+        System.out.println("NULL");
+        System.out.println("Count: "+c);
+    }
+}
+
+---
+
+//delete@begin
+class Node{ // class
+    int data;
+    Node next;
+Node(int data){ // method
+    this.data=data; // this. means current instance
+    this.next=null;
+}}
+
+public class Main{
+    public static void main(String args[]){
+        Node head=new Node(20);
+        head.next=new Node(30);
+        head.next.next=new Node(40);
+        head.next.next.next=new Node(50);
+        
+        //logic part
+        head=head.next;
+        
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.data+"->");
+            temp=temp.next;
+        }
+        System.out.println("Null");
+    }
+}
+
+---
+
+//delete@end
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+
+        Node head = new Node(20);
+        head.next = new Node(30);
+        head.next.next = new Node(40);
+        head.next.next.next = new Node(50);
+
+            Node temp = head;
+
+            // Move to second last node
+            while (temp.next.next != null) {
+                temp = temp.next;
+            }
+
+            temp.next = null; // remove last node
+
+        // Display list
+        temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("NULL");
+    }
+}
+
+---
+
+//delete at position
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+        Node head = new Node(20);
+        head.next = new Node(30);
+        head.next.next = new Node(40);
+        head.next.next.next = new Node(50);
+
+        int pos = 3;
+
+            Node temp = head;
+		// i can't be zero because this is not array so no index
+            for (int i = 1; i < pos - 1; i++) {
+                temp = temp.next;
+            }
+            
+            //logical part
+            temp.next=temp.next.next;
+            temp=head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("NULL");
+    }
+}
+
+---
+
+//Reverse list
+import java.util.*;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Node head = new Node(10);
+        head.next = new Node(20);
+        head.next.next = new Node(30);
+        head.next.next.next = new Node(40);
+
+        System.out.println("Original List:");
+        printList(head);
+
+        // Reverse
+        Node prev = null;
+        Node current = head;
+        Node next;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        head = prev;
+
+        System.out.println("Reversed List:");
+        printList(head);
+    }
+
+    static void printList(Node head) {
+        Node temp = head;
+
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+}
+
+---
+
+//Create list until -1 centinal value
+import java.util.Scanner;
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    Node head = null;
+    Node tail = null;  // Important optimization
+    System.out.println("Enter numbers (-1 to stop):");
+     while (true) {
+            int value = sc.nextInt();
+            if (value == -1) {
+                break;
+            }
+            Node newNode = new Node(value);
+            if (head == null) {
+                head = newNode;
+                tail = newNode;  // First node
+            } else {
+                tail.next = newNode;
+                tail = newNode;  // Move tail forward
+            }
+        }
+        Node temp = head;
+        while (temp != null) {
+         System.out.print(temp.data + " -> ");
+         temp = temp.next;
+        }
+        System.out.println("null");
+    }
+}
+
+---
+
+//create list from n inputs
+import java.util.Scanner;
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+public class Main {
+    public static Node createList(int n, Scanner sc) {
+        if (n <= 0) return null;
+        Node head = null;
+        Node tail = null;
+        for (int i = 0; i < n; i++) {
+            int value = sc.nextInt();
+            Node newNode = new Node(value);
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;  // O(1)
+                tail = newNode;       // Move tail
+            }
+        }
+        return head;
+    }
+    public static void printList(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("null");
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter N: ");
+        int n = sc.nextInt();
+        System.out.println("Enter " + n + " elements:");
+        Node head = createList(n, sc);
+        System.out.println("Linked List:");
+        printList(head);
+   }
+}
+
+---
+
+//Reverse List by using temp
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+
+    Node head;
+
+    // Insert at end (helper)
+    public void insertBack(int data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+    }
+
+    //  Reverse using temp (Iterative Optimal)
+    public void reverse() {
+
+        Node prev = null;
+        Node curr = head;
+        Node temp = null;
+
+        while (curr != null) {
+
+            temp = curr.next;   // Step 1: store next
+            curr.next = prev;   // Step 2: reverse link
+            prev = curr;        // Step 3: move prev
+            curr = temp;        // Step 4: move curr
+        }
+
+        head = prev; // Update head
+    }
+
+    // Print list
+    public void printList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("null");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        LinkedList list = new LinkedList();
+
+        list.insertBack(10);
+        list.insertBack(20);
+        list.insertBack(30);
+        list.insertBack(40);
+
+        System.out.println("Original:");
+        list.printList();
+
+        list.reverse();
+
+        System.out.println("Reversed:");
+        list.printList();
+    }
+}
+
+---
