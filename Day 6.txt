@@ -1,0 +1,1119 @@
+//Reverse the number
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+
+        while(num>0){
+            int digit=num%10;
+            System.out.print(digit);
+            num/=10;
+        }
+    }
+}
+
+---
+
+//count the number
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num,count=0;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+        while(num>0){
+            count++;
+            num/=10;
+        }
+        System.out.print(count);
+    }
+}
+
+---
+
+//sum of digits
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num,sum=0,digit;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+        while(num>0){
+            digit=num%10;
+            sum+=digit;
+            num/=10;
+        }
+        System.out.print(sum);
+    }
+}
+
+---
+
+//product of digits
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num,product=1,digit;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+        while(num>0){
+            digit=num%10;
+            product*=digit;
+            num/=10;
+        }
+        System.out.print(product);
+    }
+}
+
+---
+
+//factorization without recursion
+//don't use recursion because it takes more space and time complexity
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int fact=1;
+        for(int i=1;i<=num;i++)//here don't use reverse for loop it takes more time thean forward loop
+            fact=fact*i;
+        System.out.print(fact);
+    }
+}
+
+---
+
+//count of odd and even numbers
+import java.util.*;
+public class Main{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int odd=0,even=0;
+        while(num>0){
+            int digit=num%10;
+            if(digit%2==0){
+                even++;
+            }else{
+                odd++;
+            }
+            num/=10;
+        }
+        System.out.println("Odd count:"+odd);
+        System.out.print("Even count:"+even);
+    }
+}
+
+---
+
+//Palindrome
+//Input:121
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int original=num;
+        int reverse=0;
+        while(num>0){
+            int digit=num%10;
+            reverse=reverse*10+digit;
+            num/=10;
+        }
+        System.out.println(reverse);
+        if(reverse==original){
+            System.out.print("Palindrome");
+        }else{
+            System.out.print("Not Palindrome");
+        }
+    }
+}
+
+---
+
+//Amstrong number
+// 153 (3 digit) = 1^3 + 5^3 + 3^3 = 1+125+27 = 135
+//Input: 153
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int original=num;
+        //count digit
+        int count=String.valueOf(num).length();
+        int sum=0;
+        int temp=num;
+        while(temp>0){
+            int digit=temp%10;
+            sum+=Math.pow(digit,count);
+            temp/=10;
+        }
+        if(sum==original){
+            System.out.print("Amstrong number");
+        }else{
+            System.out.print("Not Amstrong number");
+        }
+    }
+}
+
+---
+
+//Adam Number
+// 12 = 12^2 = 144, 12 reverse = 21^2 = 441, 144 reverse of 441
+//Sample Input: 12
+//Sample Output: Adam Number
+import java.util.Scanner;
+
+public class Main {
+
+    public static int reverse(int num) {
+        int rev = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            rev = rev * 10 + digit;
+            num /= 10;
+        }
+
+        return rev;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        int square = num * num;
+
+        int reversedNum = reverse(num);
+        int reversedSquare = reversedNum * reversedNum;
+
+        int finalReverse = reverse(reversedSquare);
+
+        if (square == finalReverse) {
+            System.out.println("Adam Number");
+        } else {
+            System.out.println("Not an Adam Number");
+        }
+    }
+}
+
+---
+
+//Kaprekar Number
+// 45 = 45^2 = 2025 = 20+25 = 45
+//Sample Input: 45
+//Sample Output: Kaprekar Number
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        int square = num * num;
+
+        int digits = String.valueOf(num).length();
+
+        int divisor = (int) Math.pow(10, digits);
+
+        int leftPart = square / divisor;
+        int rightPart = square % divisor;
+
+        if (rightPart > 0 && (leftPart + rightPart == num)) {
+            System.out.println("Kaprekar Number");
+        } else {
+            System.out.println("Not a Kaprekar Number");
+        }
+    }
+}
+
+---
+
+//Happy Number
+// 19 = 1^2 + 9^2 = 1+81 = 82 = 8+2 = 10 = 1
+//Sample Input: 19
+//Sample Output: Happy Number
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Main {
+
+    public static int sumOfSquares(int num) {
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += digit * digit;
+            num /= 10;
+        }
+
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        HashSet<Integer> visited = new HashSet<>();
+
+        while (num != 1 && !visited.contains(num)) {
+            visited.add(num);
+            num = sumOfSquares(num);
+        }
+
+        if (num == 1) {
+            System.out.println("Happy Number");
+        } else {
+            System.out.println("Not a Happy Number");
+        }
+    }
+}
+
+---
+
+//Strong Number
+//145 = 1!+4!+5! = 1+24+120 = 145
+//Sample Input: 145
+//Sample Output: Strong Number
+import java.util.Scanner;
+
+public class Main {
+
+    public static int factorial(int n) {
+        int fact = 1;
+
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+        }
+
+        return fact;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+        int original = num;
+
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += factorial(digit);
+            num /= 10;
+        }
+
+        if (sum == original) {
+            System.out.println("Strong Number");
+        } else {
+            System.out.println("Not a Strong Number");
+        }
+    }
+}
+
+---
+
+//Lucas Number Series
+//Sample Input: 6
+//Sample Output: 2 1 3 4 7 11
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int a = 2;
+        int b = 1;
+
+        for (int i = 1; i <= n; i++) {
+            System.out.print(a + " ");
+
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+    }
+}
+
+---
+
+//Harshad Number
+// 18 = 1+8 = 9 => 18%9 = 0
+//Sample Input: 18
+//Sample Output: Harshad Number
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+        int original = num;
+
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += digit;
+            num /= 10;
+        }
+
+        if (original % sum == 0) {
+            System.out.println("Harshad Number");
+        } else {
+            System.out.println("Not a Harshad Number");
+        }
+    }
+}
+
+---
+
+//Print digits with space
+//Sample Input: 1234
+//Sample Output: 1 2 3 4
+import java.util.Scanner;
+
+public class Main {
+
+    public static void printDigits(int num) {
+        if (num == 0) {
+            return;
+        }
+
+        printDigits(num / 10);
+        System.out.print(num % 10 + " ");
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        printDigits(num);
+    }
+}
+
+---
+
+//Print all even and odd digits
+//Sample Input: 326741
+//Sample Output: Even: 2 6 4, Odd: 3 7 1
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        ArrayList<Integer> even = new ArrayList<>();
+        ArrayList<Integer> odd = new ArrayList<>();
+
+        while (num > 0) {
+            int digit = num % 10;
+
+            if (digit % 2 == 0)
+                even.add(0, digit); // Maintain original order
+            else
+                odd.add(0, digit);
+
+            num /= 10;
+        }
+
+        System.out.print("Even Digits: ");
+        for (int d : even) {
+            System.out.print(d + " ");
+        }
+
+        System.out.println();
+
+        System.out.print("Odd Digits: ");
+        for (int d : odd) {
+            System.out.print(d + " ");
+        }
+    }
+}
+
+---
+
+//Disarium Number
+// 135 = (1)^1 + (3)^2 + (5)^3 = 1+9+125 = 135
+//Sample Input: 135
+//Sample Output: Disarium Number
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+        int original = num;
+
+        String str = String.valueOf(num);
+
+        int sum = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            int digit = str.charAt(i) - '0';
+            sum += (int) Math.pow(digit, i + 1);
+        }
+
+        if (sum == original)
+            System.out.println("Disarium Number");
+        else
+            System.out.println("Not a Disarium Number");
+    }
+}
+
+---
+
+//Merge 2 numbers
+//Sample Input: 123 and 456
+//Sample Output: 123456
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String num1 = sc.next();
+        String num2 = sc.next();
+
+        String merged = num1 + num2;
+
+        System.out.println("Merged Number = " + merged);
+    }
+}
+
+---
+
+//Split Phone Number (XXX-XXX-XXXX)
+//Sample Input: 987-654-3210
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String phone = sc.nextLine();
+
+        String[] parts = phone.split("-");
+
+        System.out.println("Area Code : " + parts[0]);
+        System.out.println("Exchange  : " + parts[1]);
+        System.out.println("Number    : " + parts[2]);
+    }
+}
+
+---
+
+//Convert Integer to Binary
+//Sample Input: 5
+//Sample Output: 101
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+
+        Stack<Integer> stack = new Stack<>();
+
+        while (num > 0) {
+            stack.push(num % 2);
+            num /= 2;
+        }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop());
+        }
+    }
+}
+
+---
+
+Recursion
+
+63. Fibonacci Series using Recursion
+   Sample Input: 5
+   Sample Output: 0 1 1 2 3
+
+64. Factorial using Recursion
+   Sample Input: 5
+   Sample Output: 120
+
+65. Print 1 to N using Recursion
+   Sample Input: 5
+   Sample Output: 1 2 3 4 5
+
+---
+
+//String
+public class Main {
+    public static void main(String arg[]) {
+        String str = "java";
+        int l = str.length();
+
+        System.out.println("Length = " + l);
+
+        char s = 'a';
+        boolean flag = false;
+
+        for (int i = 0; i < str.length(); i++) {
+            System.out.print(str.charAt(i) + " ");
+
+            if (str.charAt(i) == s) {
+                flag = true;
+            }
+        }
+
+        System.out.println();
+
+        if (flag) {
+            System.out.println("Found");
+        } else {
+            System.out.println("Not Found");
+        }
+    }
+}
+
+---
+
+String Problems
+
+1. Print characters with space
+   Sample Input: Hello
+   Sample Output: H e l l o
+public class Main {
+    public static void main(String[] args) {
+
+        String str = "Java";
+
+        for (int i = 0; i < str.length(); i++) {
+            System.out.print(str.charAt(i) + " ");
+        }
+    }
+}
+
+2. Count characters in string
+   Sample Input: Hello
+   Sample Output: 5
+public class Main {
+    public static void main(String[] args) {
+
+        String str = "Java Programming";
+
+        int count = str.length();
+
+        System.out.println("Total characters: " + count);
+    }
+}
+
+
+3. Search for a character in string
+   Sample Input: Hello, search: 'e'
+   Sample Output: Found
+public class Main {
+    public static void main(String[] args) {
+
+        String str = "Java Programming";
+        char target = 'g';
+
+        boolean found = false;
+
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == target) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+            System.out.println("Character found");
+        else
+            System.out.println("Character not found");
+    }
+}
+
+4. Merge two strings
+   Sample Input: "Hello" and "World"
+   Sample Output: HelloWorld
+public class Main {
+    public static void main(String[] args) {
+
+        String str1 = "Hello";
+        String str2 = "World";
+
+        String merged = str1 + str2;
+
+        System.out.println("Merged String: " + merged);
+    }
+}
+String Builder:
+public class Main {
+    public static void main(String[] args) {
+
+        String str1 = "Hello";
+        String str2 = "World";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(str1);
+        sb.append(str2);
+
+        System.out.println("Merged String: " + sb.toString());
+    }
+}
+
+
+5. Reverse a string
+   Sample Input: Hello
+   Sample Output: olleH
+public class Main {
+    public static void main(String[] args) {
+
+        String str = "Java";
+        String reversed = "";
+
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reversed += str.charAt(i);
+        }
+
+        System.out.println("Reversed String: " + reversed);
+    }
+}
+
+String Builder :
+
+public class Main {
+    public static void main(String[] args) {
+
+        String str = "Java";
+
+        String reversed = new StringBuilder(str).reverse().toString();
+
+        System.out.println("Reversed String: " + reversed);
+    }
+}
+
+
+6. Compare two strings
+   *Lexical comparison.*
+
+public class Main {
+    public static void main(String[] args) {
+
+        String str1 = "Java";
+        String str2 = "Java";
+
+        if (str1.equals(str2)) {
+            System.out.println("Strings are equal");
+        } else {
+            System.out.println("Strings are not equal");
+        }
+    }
+}
+
+int result = str1.compareTo(str2);
+
+if (result == 0)
+    System.out.println("Strings are equal");
+else if (result > 0)
+    System.out.println("str1 is greater");
+else
+    System.out.println("str2 is greater");
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        String str1 = "Apple";
+        String str2 = "Banana";
+        String str3 = "Apple";
+        String str4 ="apple";
+        System.out.println(str1.compareTo(str2));
+        System.out.println(str1.compareTo(str3));
+        System.out.println(str2.compareTo(str1));
+        System.out.println(str1.compareTo(str4));
+        System.out.println(str4.compareTo(str1));
+        
+    }
+}
+
+
+7. Copy one string to another
+   *Use loops or functions to copy.*
+M1. public class Main {
+    public static void main(String[] args) {
+        String str1 = "Hello Java";
+        String str2 = str1;   // Copy
+
+        System.out.println("Original: " + str1);
+        System.out.println("Copied: " + str2);
+    }
+}
+M2.public class Main {
+    public static void main(String[] args) {
+        String str1 = "Hello Java";
+        String str2 = new String(str1);  // New object created
+
+        System.out.println("Original: " + str1);
+        System.out.println("Copied: " + str2);
+    }
+}
+M3. public class Main {
+    public static void main(String[] args) {
+        String str1 = "Hello Java";
+        String str2 = String.valueOf(str1);
+
+        System.out.println("Copied: " + str2);
+    }
+}
+M4. public class Main {
+    public static void main(String[] args) {
+        String str1 = "Hello";
+        char[] arr = str1.toCharArray();
+        
+        String str2 = "";
+        for (char ch : arr) {
+            str2 += ch;
+        }
+
+        System.out.println("Copied: " + str2);
+    }
+}
+
+
+8. Count frequency of each character
+   *Display character counts.*
+M1. Using Hash Map
+import java.util.HashMap;
+
+public class Main {
+    public static void main(String[] args) {
+        String str = "programming";
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // Ignore spaces (optional)
+            if (ch == ' ') continue;
+
+            if (map.containsKey(ch)) {
+                map.put(ch, map.get(ch) + 1);
+            } else {
+                map.put(ch, 1);
+            }
+        }
+
+        // Print frequency
+        for (char key : map.keySet()) {
+            System.out.println(key + " : " + map.get(key));
+        }
+    }
+}
+M2. Using Brute Force Algorithm
+public class Main {
+    public static void main(String[] args) {
+        String str = "programming";
+        char[] arr = str.toCharArray();
+
+        for (int i = 0; i < arr.length; i++) {
+            int count = 1;
+
+            if (arr[i] == '0') continue;
+
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] == arr[j]) {
+                    count++;
+                    arr[j] = '0'; // mark counted
+                }
+            }
+
+            System.out.println(arr[i] + " : " + count);
+        }
+    }
+}
+Take one element at a time and compare with the rest of the elements in an array
+
+9. Convert vowels to \$
+   Sample Input: Hello
+   Sample Output: H\$ll\$
+M1:public class Main {
+    public static void main(String[] args) {
+        String str = "programming is fun";
+        String result = "";
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if (ch == 'a' || ch == 'e' || ch == 'i' ||
+                ch == 'o' || ch == 'u' ||
+                ch == 'A' || ch == 'E' || ch == 'I' ||
+                ch == 'O' || ch == 'U') {
+                
+                result += "$";
+            } else {
+                result += ch;
+            }
+        }
+        System.out.println("Output: " + result);
+    }
+}
+M2:public class Main {
+    public static void main(String[] args) {
+        String str = "programming is fun";
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if ("aeiouAEIOU".indexOf(ch) != -1) {
+                sb.append('$');
+            } else {
+                sb.append(ch);
+            }
+        }
+
+        System.out.println("Output: " + sb.toString());
+    }
+}
+M3:public class Main {
+    public static void main(String[] args) {
+        String str = "programming is fun";
+        String result = str.replaceAll("[aeiouAEIOU]", "$");
+        System.out.println(result);
+    }
+}
+
+
+10. Convert consonants to #
+    Sample Input: Hello
+    Sample Output: #e##o
+M1:public class Main {
+    public static void main(String[] args) {
+        String str = "programming is fun";
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // Check if character is a letter
+            if (Character.isLetter(ch) && 
+                "aeiouAEIOU".indexOf(ch) == -1) {
+                
+                sb.append('#');   // Replace consonant
+            } else {
+                sb.append(ch);    // Keep vowel / space / symbol
+            }
+        }
+
+        System.out.println("Output: " + sb.toString());
+    }
+}
+M2:public class Main {
+    public static void main(String[] args) {
+        String str = "programming is fun";
+        String result = str.replaceAll("(?i)[b-df-hj-np-tv-z]", "#");
+        System.out.println(result);
+    }
+}
+11. Count alphabet, number and special characters
+    Sample Input: Hello@123
+    Sample Output: Alphabets:5, Numbers:3, Specials:1
+M1:public class Main {
+    public static void main(String[] args) {
+        String str = "Java123@#2026";
+
+        int alphabets = 0;
+        int digits = 0;
+        int special = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if (Character.isLetter(ch)) {
+                alphabets++;
+            }
+            else if (Character.isDigit(ch)) {
+                digits++;
+            }
+            else {
+                special++;
+            }
+        }
+
+        System.out.println("Alphabets: " + alphabets);
+        System.out.println("Digits: " + digits);
+        System.out.println("Special Characters: " + special);
+    }
+}
+M2:public class Main {
+    public static void main(String[] args) {
+        String str = "Java123@#2026";
+
+        int alphabets = 0;
+        int digits = 0;
+        int special = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if ((ch >= 'a' && ch <= 'z') || 
+                (ch >= 'A' && ch <= 'Z')) {
+                alphabets++;
+            }
+            else if (ch >= '0' && ch <= '9') {
+                digits++;
+            }
+            else {
+                special++;
+            }
+        }
+
+        System.out.println("Alphabets: " + alphabets);
+        System.out.println("Digits: " + digits);
+        System.out.println("Special Characters: " + special);
+    }
+}
+
+
+12. Remove duplicate characters
+    Sample Input: programming
+    Sample Output: progamin
+
+import java.util.LinkedHashSet;
+public class Main {
+    public static void main(String[] args) {
+        String str = "programming";
+        LinkedHashSet<Character> set = new LinkedHashSet<>();
+        for (int i = 0; i < str.length(); i++) {
+            set.add(str.charAt(i));
+        }
+        StringBuilder result = new StringBuilder();
+        for (char ch : set) {
+            result.append(ch);
+        }
+        System.out.println("Output: " + result.toString());
+    }
+}
+
+
+13. Identify substring
+    *Check if one string is substring of another.*
+M1:public class Main {
+    public static void main(String[] args) {
+        String str = "programming";
+        String sub = "gram";
+
+        if (str.contains(sub)) {
+            System.out.println("Substring Found");
+        } else {
+            System.out.println("Substring Not Found");
+        }
+    }
+}
+M2:public class Main {
+    public static void main(String[] args) {
+        String str = "programming";
+        String sub = "gram";
+
+        if (str.indexOf(sub) != -1) {
+            System.out.println("Substring Found at index: " + str.indexOf(sub));
+        } else {
+            System.out.println("Substring Not Found");
+        }
+    }
+}
+
+
+14. Check Anagram
+    *Check if two strings are anagrams.*
+
+import java.util.Arrays;
+public class Main {
+    public static void main(String[] args) {
+        String s1 = "listen";
+        String s2 = "silent";
+
+        char[] arr1 = s1.toCharArray();
+        char[] arr2 = s2.toCharArray();
+
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+
+        if (Arrays.equals(arr1, arr2))
+            System.out.println("Anagram");
+        else
+            System.out.println("Not Anagram");
+    }
+}
+
+
+15. Check Pangram
+    *Check if string contains all letters.*
+public class Main {
+    public static void main(String[] args) {
+        String str = "The quick brown fox jumps over the lazy dog";
+        str = str.toLowerCase();
+
+        boolean[] seen = new boolean[26];
+        int count = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if (ch >= 'a' && ch <= 'z') {
+                if (!seen[ch - 'a']) {
+                    seen[ch - 'a'] = true;
+                    count++;
+                }
+            }
+        }
+
+        if (count == 26)
+            System.out.println("Pangram");
+        else
+            System.out.println("Not Pangram");
+    }
+}
+
+
+16. Find max length substring without repeating chars
+    *Return the longest substring.*
+
+import java.util.HashSet;
+public class Main {
+    public static void main(String[] args) {
+        String str = "abcabcbb";
+        HashSet<Character> set = new HashSet<>();
+        int left = 0;
+        int maxLength = 0;
+        for (int right = 0; right < str.length(); right++) {
+                while (set.contains(str.charAt(right))) {
+                set.remove(str.charAt(left));
+                left++;
+            }
+
+            set.add(str.charAt(right));
+            maxLength = Math.max(maxLength, right - left + 1);
+        }
+
+        System.out.println("Max Length: " + maxLength);
+    }
+}
+
