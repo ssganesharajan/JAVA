@@ -1,0 +1,562 @@
+//Reverse the number
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+
+        while(num>0){
+            int digit=num%10;
+            System.out.print(digit);
+            num/=10;
+        }
+    }
+}
+
+---
+
+//count the number
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num,count=0;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+        while(num>0){
+            count++;
+            num/=10;
+        }
+        System.out.print(count);
+    }
+}
+
+---
+
+//sum of digits
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num,sum=0,digit;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+        while(num>0){
+            digit=num%10;
+            sum+=digit;
+            num/=10;
+        }
+        System.out.print(sum);
+    }
+}
+
+---
+
+//product of digits
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        int num,product=1,digit;
+        Scanner sc=new Scanner(System.in);
+        num=sc.nextInt();
+        while(num>0){
+            digit=num%10;
+            product*=digit;
+            num/=10;
+        }
+        System.out.print(product);
+    }
+}
+
+---
+
+//factorization without recursion
+//don't use recursion because it takes more space and time complexity
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int fact=1;
+        for(int i=1;i<=num;i++)//here don't use reverse for loop it takes more time thean forward loop
+            fact=fact*i;
+        System.out.print(fact);
+    }
+}
+
+---
+
+//count of odd and even numbers
+import java.util.*;
+public class Main{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int odd=0,even=0;
+        while(num>0){
+            int digit=num%10;
+            if(digit%2==0){
+                even++;
+            }else{
+                odd++;
+            }
+            num/=10;
+        }
+        System.out.println("Odd count:"+odd);
+        System.out.print("Even count:"+even);
+    }
+}
+
+---
+
+//Palindrome
+//Input:121
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int original=num;
+        int reverse=0;
+        while(num>0){
+            int digit=num%10;
+            reverse=reverse*10+digit;
+            num/=10;
+        }
+        System.out.println(reverse);
+        if(reverse==original){
+            System.out.print("Palindrome");
+        }else{
+            System.out.print("Not Palindrome");
+        }
+    }
+}
+
+---
+
+//Amstrong number
+// 153 (3 digit) = 1^3 + 5^3 + 3^3 = 1+125+27 = 135
+//Input: 153
+import java.util.*;
+public class Main{
+    public static void main(String arg[]){
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int original=num;
+        //count digit
+        int count=String.valueOf(num).length();
+        int sum=0;
+        int temp=num;
+        while(temp>0){
+            int digit=temp%10;
+            sum+=Math.pow(digit,count);
+            temp/=10;
+        }
+        if(sum==original){
+            System.out.print("Amstrong number");
+        }else{
+            System.out.print("Not Amstrong number");
+        }
+    }
+}
+
+---
+
+//Adam Number
+// 12 = 12^2 = 144, 12 reverse = 21^2 = 441, 144 reverse of 441
+//Sample Input: 12
+//Sample Output: Adam Number
+import java.util.Scanner;
+
+public class Main {
+
+    public static int reverse(int num) {
+        int rev = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            rev = rev * 10 + digit;
+            num /= 10;
+        }
+
+        return rev;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        int square = num * num;
+
+        int reversedNum = reverse(num);
+        int reversedSquare = reversedNum * reversedNum;
+
+        int finalReverse = reverse(reversedSquare);
+
+        if (square == finalReverse) {
+            System.out.println("Adam Number");
+        } else {
+            System.out.println("Not an Adam Number");
+        }
+    }
+}
+
+---
+
+//Kaprekar Number
+// 45 = 45^2 = 2025 = 20+25 = 45
+//Sample Input: 45
+//Sample Output: Kaprekar Number
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        int square = num * num;
+
+        int digits = String.valueOf(num).length();
+
+        int divisor = (int) Math.pow(10, digits);
+
+        int leftPart = square / divisor;
+        int rightPart = square % divisor;
+
+        if (rightPart > 0 && (leftPart + rightPart == num)) {
+            System.out.println("Kaprekar Number");
+        } else {
+            System.out.println("Not a Kaprekar Number");
+        }
+    }
+}
+
+---
+
+//Happy Number
+// 19 = 1^2 + 9^2 = 1+81 = 82 = 8+2 = 10 = 1
+//Sample Input: 19
+//Sample Output: Happy Number
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Main {
+
+    public static int sumOfSquares(int num) {
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += digit * digit;
+            num /= 10;
+        }
+
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        HashSet<Integer> visited = new HashSet<>();
+
+        while (num != 1 && !visited.contains(num)) {
+            visited.add(num);
+            num = sumOfSquares(num);
+        }
+
+        if (num == 1) {
+            System.out.println("Happy Number");
+        } else {
+            System.out.println("Not a Happy Number");
+        }
+    }
+}
+
+---
+
+//Strong Number
+//145 = 1!+4!+5! = 1+24+120 = 145
+//Sample Input: 145
+//Sample Output: Strong Number
+import java.util.Scanner;
+
+public class Main {
+
+    public static int factorial(int n) {
+        int fact = 1;
+
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+        }
+
+        return fact;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+        int original = num;
+
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += factorial(digit);
+            num /= 10;
+        }
+
+        if (sum == original) {
+            System.out.println("Strong Number");
+        } else {
+            System.out.println("Not a Strong Number");
+        }
+    }
+}
+
+---
+
+//Lucas Number Series
+//Sample Input: 6
+//Sample Output: 2 1 3 4 7 11
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int a = 2;
+        int b = 1;
+
+        for (int i = 1; i <= n; i++) {
+            System.out.print(a + " ");
+
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+    }
+}
+
+---
+
+//Harshad Number
+// 18 = 1+8 = 9 => 18%9 = 0
+//Sample Input: 18
+//Sample Output: Harshad Number
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+        int original = num;
+
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += digit;
+            num /= 10;
+        }
+
+        if (original % sum == 0) {
+            System.out.println("Harshad Number");
+        } else {
+            System.out.println("Not a Harshad Number");
+        }
+    }
+}
+
+---
+
+//Print digits with space
+//Sample Input: 1234
+//Sample Output: 1 2 3 4
+import java.util.Scanner;
+
+public class Main {
+
+    public static void printDigits(int num) {
+        if (num == 0) {
+            return;
+        }
+
+        printDigits(num / 10);
+        System.out.print(num % 10 + " ");
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        printDigits(num);
+    }
+}
+
+---
+
+//Print all even and odd digits
+//Sample Input: 326741
+//Sample Output: Even: 2 6 4, Odd: 3 7 1
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+
+        ArrayList<Integer> even = new ArrayList<>();
+        ArrayList<Integer> odd = new ArrayList<>();
+
+        while (num > 0) {
+            int digit = num % 10;
+
+            if (digit % 2 == 0)
+                even.add(0, digit); // Maintain original order
+            else
+                odd.add(0, digit);
+
+            num /= 10;
+        }
+
+        System.out.print("Even Digits: ");
+        for (int d : even) {
+            System.out.print(d + " ");
+        }
+
+        System.out.println();
+
+        System.out.print("Odd Digits: ");
+        for (int d : odd) {
+            System.out.print(d + " ");
+        }
+    }
+}
+
+---
+
+//Disarium Number
+// 135 = (1)^1 + (3)^2 + (5)^3 = 1+9+125 = 135
+//Sample Input: 135
+//Sample Output: Disarium Number
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int num = sc.nextInt();
+        int original = num;
+
+        String str = String.valueOf(num);
+
+        int sum = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            int digit = str.charAt(i) - '0';
+            sum += (int) Math.pow(digit, i + 1);
+        }
+
+        if (sum == original)
+            System.out.println("Disarium Number");
+        else
+            System.out.println("Not a Disarium Number");
+    }
+}
+
+---
+
+//Merge 2 numbers
+//Sample Input: 123 and 456
+//Sample Output: 123456
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String num1 = sc.next();
+        String num2 = sc.next();
+
+        String merged = num1 + num2;
+
+        System.out.println("Merged Number = " + merged);
+    }
+}
+
+---
+
+//Split Phone Number (XXX-XXX-XXXX)
+//Sample Input: 987-654-3210
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String phone = sc.nextLine();
+
+        String[] parts = phone.split("-");
+
+        System.out.println("Area Code : " + parts[0]);
+        System.out.println("Exchange  : " + parts[1]);
+        System.out.println("Number    : " + parts[2]);
+    }
+}
+
+---
+
+//Convert Integer to Binary
+//Sample Input: 5
+//Sample Output: 101
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+
+        Stack<Integer> stack = new Stack<>();
+
+        while (num > 0) {
+            stack.push(num % 2);
+            num /= 2;
+        }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop());
+        }
+    }
+}
+
+---
+
+Recursion
+
+63. Fibonacci Series using Recursion
+   Sample Input: 5
+   Sample Output: 0 1 1 2 3
+
+64. Factorial using Recursion
+   Sample Input: 5
+   Sample Output: 120
+
+65. Print 1 to N using Recursion
+   Sample Input: 5
+   Sample Output: 1 2 3 4 5
