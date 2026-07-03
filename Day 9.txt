@@ -1,0 +1,263 @@
+WAP to find page fault
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] pages = {1, 2, 3, 2, 1, 4};
+        int frames = 3;
+        ArrayList<Integer> memory = new ArrayList<>();
+        int pageFaults = 0;
+        for (int page : pages) {
+            if (!memory.contains(page)) {
+                pageFaults++;
+                if (memory.size() < frames) {
+                    memory.add(page);
+                }
+                System.out.println(page + " -> Page Fault");
+            } else {
+                System.out.println(page + " -> Page Hit");
+            }
+        }
+        System.out.println("Total Page Faults = " + pageFaults);
+    }
+}
+1. FIFO Page Replacement
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        int[] pages = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2};
+        int frames = 3;
+        Queue<Integer> q = new LinkedList<>();
+        HashSet<Integer> set = new HashSet<>();
+        int pageFaults = 0;
+        int pageHits = 0;
+        
+        for (int page : pages) {
+            if (!set.contains(page)) {
+                pageFaults++;
+                if (set.size() == frames) {
+                    int oldest = q.poll();
+                    set.remove(oldest);
+                }
+                q.add(page);
+                set.add(page);
+                System.out.println("Page: " + page + " | Fault | Frames: " + q);
+            } else {
+                pageHits++;
+                System.out.println("Page: " + page + " | Hit   | Frames: " + q);
+            }
+        }
+        System.out.println("Total Page Faults = " + pageFaults);
+        System.out.println("Total Page Hits = " + pageHits);
+    }
+}
+2. LRU Page Replacement
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] pages = {1, 2, 3, 1, 4, 5};
+        int frames = 3;
+        ArrayList<Integer> memory = new ArrayList<>();
+        int pageFaults = 0;
+        int pageHits = 0;
+        for (int page : pages) {
+            if (!memory.contains(page)) { // Page Fault
+                pageFaults++;
+                if (memory.size() == frames) {
+                    memory.remove(0); // Remove least recently used page
+                }
+                memory.add(page);
+                System.out.println("Page " + page +
+                                   " -> FAULT | Frames: " + memory);
+            } else { // Page Hit
+                pageHits++;
+                memory.remove(Integer.valueOf(page));
+                memory.add(page);
+                System.out.println("Page " + page +
+                                   " -> HIT   | Frames: " + memory);
+            }
+        }
+        System.out.println("\nTotal Page Faults = " + pageFaults);
+        System.out.println("Total Page Hits   = " + pageHits);
+    }
+}
+3. Optimal Page Replacement
+import java.util.*;
+public class Main {
+    public static int findVictim(List<Integer> memory, int[] pages, int currentIndex) {
+        int farthest = currentIndex;
+        int victim = -1;
+        for (int i = 0; i < memory.size(); i++) {
+            int j;
+            for (j = currentIndex + 1; j < pages.length; j++) {
+                if (memory.get(i) == pages[j]) {
+                    if (j > farthest) {
+                        farthest = j;
+                        victim = i;
+                    }
+                    break;
+                }
+            }
+            if (j == pages.length)
+                return i;
+        }
+        return victim;
+    }
+    public static void main(String[] args) {
+        int[] pages = {7, 0, 1, 2, 0, 3, 0, 4};
+        int frames = 3;
+        List<Integer> memory = new ArrayList<>();
+        int pageFaults = 0;
+        for (int i = 0; i < pages.length; i++) {
+            int page = pages[i];
+            if (!memory.contains(page)) {
+                pageFaults++;
+                if (memory.size() < frames) {
+                    memory.add(page);
+                } else {
+                    int victim = findVictim(memory, pages, i);
+                    memory.set(victim, page);
+                }
+            }
+            System.out.println("Frames: " + memory);
+        }
+        System.out.println("Page Faults = " + pageFaults);
+    }
+}
+4. LFU Page Replacement
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] pages = {1,2,1,3,2,1,4};
+        int frames = 3;
+        ArrayList<Integer> memory = new ArrayList<>();
+        HashMap<Integer,Integer> freq = new HashMap<>();
+        int pageFaults = 0;
+        for(int page : pages){
+            freq.put(page, freq.getOrDefault(page,0)+1);
+            if(!memory.contains(page)){
+                pageFaults++;
+                if(memory.size() == frames){
+                    int victim = memory.get(0);
+                    for(int p : memory){
+                        if(freq.get(p) < freq.get(victim)){
+                            victim = p;
+                        }
+                    }
+                    memory.remove(Integer.valueOf(victim));
+                }
+                memory.add(page);
+            }
+            System.out.println(memory);
+        }
+
+        System.out.println("Page Faults = " + pageFaults);
+    }
+}
+5. Second Chance Algorithm
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] pages = {1,2,3,4,1,2,5};
+        int frames = 3;
+        int[] frame = new int[frames];
+        int[] refBit = new int[frames];
+        Arrays.fill(frame, -1);
+        int pointer = 0;
+        int faults = 0;
+        for(int page : pages){
+            boolean hit = false;
+            for(int i=0;i<frames;i++){
+                if(frame[i] == page){
+                    refBit[i] = 1;
+                    hit = true;
+                }
+            }
+            if(!hit){
+                faults++;
+                while(refBit[pointer] == 1){
+                    refBit[pointer] = 0;
+                    pointer = (pointer + 1) % frames;
+                }
+                frame[pointer] = page;
+                refBit[pointer] = 1;
+                pointer = (pointer + 1) % frames;
+            }
+
+            System.out.println(Arrays.toString(frame));
+        }
+
+        System.out.println("Page Faults = " + faults);
+    }
+}
+6. LIFO Page replacement algorithm
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        int[] pages = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2};
+        int frames = 3;
+        Stack<Integer> s = new Stack<Integer>();
+        int pageFaults = 0;
+        int pageHits = 0;
+        for (int page : pages) {
+            if (!s.contains(page)) {
+                pageFaults++;
+                if (s.size() == frames) {
+                    int newest = s.pop();
+                }
+                s.push(page);
+                System.out.println("Page: " + page + " | Fault | Frames: " + s);
+            } else {
+                pageHits++;
+                System.out.println("Page: " + page + " | Hit   | Frames: " + s);
+            }
+        }
+        System.out.println("Total Page Faults = " + pageFaults);
+        System.out.println("Total Page Hits = " + pageHits);
+    }
+}
+WAP to check whether the given page is there in the memory
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        int[] pages = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2};
+         int e=7;
+         boolean found=false;
+        Stack<Integer> s = new Stack<Integer>();
+        for (int page : pages) {
+         s.push(page);
+            if (s.contains(e)) 
+                {
+                    found=true;
+                }
+        }
+                if(found)
+                {
+                    System.out.println("Hit");
+                }
+                else
+                {
+                    System.out.println("Fault");
+                }
+            }
+        }
+M2:
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        int[] pages = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2};
+        Scanner sc=new Scanner(System.in);
+        Stack<Integer> s = new Stack<Integer>();
+        for (int page : pages) {
+         s.push(page);
+        }
+        int e=sc.nextInt();
+            if (s.contains(e)) 
+                {
+                    System.out.println("Hit");
+                }
+                else
+                {
+                    System.out.println("Fault");
+                }
+            }
+        }

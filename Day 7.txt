@@ -1,0 +1,561 @@
+1. Find Middle of Linked List (Easy)
+Given a linked list, find the middle node.
+1 → 2 → 3 → 4 → 5
+3
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+public class Main {
+
+    static Node findMiddle(Node head) {
+
+        Node slow = head;
+        Node fast = head;
+
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    public static void main(String[] args) {
+        Node head = new Node(1);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(5);
+        System.out.println(findMiddle(head).data);
+    }
+}
+2. Detect Cycle in Linked List (Easy)
+Problem: Check whether a linked list contains a loop.
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+    static boolean hasCycle(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+           fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static void main(String[] args) {
+        Node head = new Node(10);
+        head.next = new Node(20);
+        head.next.next = new Node(30);
+        head.next.next.next = new Node(40);
+        head.next.next.next.next = new Node(50);
+        // Create a cycle
+       head.next.next.next.next.next = head.next;
+        if (hasCycle(head)) {
+            System.out.println("Cycle Detected");
+        } else {
+            System.out.println("No Cycle");
+        }
+    }
+}
+3. Find Starting Point of Loop (Medium)
+Problem
+Find the node where the cycle begins.
+
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+public class Main {
+    static Node findCycleStart(Node head) {
+        Node slow = head;
+        Node fast = head;
+        boolean cycle = false;
+        // Detect cycle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                cycle = true;
+                break;
+            }
+        }
+
+        // No cycle found
+        if (!cycle) {
+            return null;
+        }
+        // Find start of cycle
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+    public static void main(String[] args) {
+        Node head = new Node(10);
+        head.next = new Node(20);
+        head.next.next = new Node(30);
+        head.next.next.next = new Node(40);
+        head.next.next.next.next = new Node(50);
+        // Create cycle: 50 -> 30
+        head.next.next.next.next.next = head.next.next;
+        Node startNode = findCycleStart(head);
+        if (startNode != null) {
+            System.out.println("Cycle starts at node: " + startNode.data);
+        } else {
+            System.out.println("No Cycle Found");
+        }
+    }
+}
+4. Find Length of Cycle (Medium)
+Problem
+Find the number of nodes in a loop.
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+public class Main {
+    static int cycleLength(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                int count = 1;
+                fast = fast.next;
+                while (slow != fast) {
+                    count++;
+                    fast = fast.next;
+                }
+                return count;
+            }
+        }
+        return 0;
+    }
+    public static void main(String[] args) {
+        Node head = new Node(10);
+        head.next = new Node(20);
+        head.next.next = new Node(30);
+        head.next.next.next = new Node(40);
+        head.next.next.next.next = new Node(50);
+        // Create cycle: 50 -> 30
+        head.next.next.next.next.next = head.next.next;
+        int length = cycleLength(head);
+        if (length > 0) {
+            System.out.println("Cycle Length = " + length);
+        } else {
+            System.out.println("No Cycle Found");
+        }
+    }
+ 5. Happy Number (Medium)
+Problem
+A number is happy if repeatedly summing the squares 
+of its digits eventually reaches 1.
+19
+true
+public class Main {
+
+    static int squareSum(int n) {
+
+        int sum = 0;
+
+        while(n > 0) {
+            int digit = n % 10;
+            sum += digit * digit;
+            n /= 10;
+        }
+
+        return sum;
+    }
+
+    static boolean isHappy(int n) {
+
+        int slow = n;
+        int fast = n;
+
+        do {
+            slow = squareSum(slow);
+            fast = squareSum(squareSum(fast));
+        }
+        while(slow != fast);
+
+        return slow == 1;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isHappy(19));
+    }
+}
+6. Find Nth Node from End (Medium)
+Problem
+Find the nth node from the end.
+Input
+1 → 2 → 3 → 4 → 5
+n = 2
+Output
+4
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+
+    static Node nthFromEnd(Node head, int n) {
+
+        Node slow = head;
+        Node fast = head;
+
+        // Move fast pointer n steps ahead
+        for (int i = 0; i < n; i++) {
+
+            if (fast == null) {
+                return null; // n is greater than list length
+            }
+
+            fast = fast.next;
+        }
+
+        // Move both pointers
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return slow;
+    }
+
+    public static void main(String[] args) {
+
+        Node head = new Node(10);
+        head.next = new Node(20);
+        head.next.next = new Node(30);
+        head.next.next.next = new Node(40);
+        head.next.next.next.next = new Node(50);
+
+        int n = 2;
+
+        Node result = nthFromEnd(head, n);
+
+        if (result != null) {
+            System.out.println(n + "th node from end is: " + result.data);
+        } else {
+            System.out.println("Invalid value of n");
+        }
+    }
+}
+7. Check Palindrome Linked List (Medium)
+Input
+1 → 2 → 2 → 1
+Output
+true
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Main {
+
+    // Function to find Nth node from the end
+    static Node nthFromEnd(Node head, int n) {
+
+        Node slow = head;
+        Node fast = head;
+
+        // Move fast pointer n steps ahead
+        for (int i = 0; i < n; i++) {
+            if (fast == null) {
+                return null; // n is greater than the length of the list
+            }
+            fast = fast.next;
+        }
+
+        // Move both pointers until fast reaches the end
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return slow;
+    }
+
+    public static void main(String[] args) {
+
+        // Creating Linked List
+        Node head = new Node(10);
+        head.next = new Node(20);
+        head.next.next = new Node(30);
+        head.next.next.next = new Node(40);
+        head.next.next.next.next = new Node(50);
+
+        int n = 2;
+
+        Node result = nthFromEnd(head, n);
+
+        if (result != null) {
+            System.out.println("The " + n + "th node from the end is: " + result.data);
+        } else {
+            System.out.println("Invalid value of n");
+        }
+    }
+}
+
+---
+
+Problems to be discussed
+
+Day 2
+
+Prime check
+Count divisors
+GCD/HCF
+Sieveof eranthossenes
+Power calculation
+
+Array
+Day 3
+
+Maximum sub array sum
+Equilibirum index
+Leaders in array
+Majority elements
+Trapping rain water
+
+
+Move zero
+Missing no
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        int n, os = 0, cs = 0, i;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter value for n");
+        n = sc.nextInt();
+        int[] ar = new int[n];
+        for (i = 1; i <= n; i++) {
+            os = os + i;
+        }
+        System.out.println("Enter " + (n - 1) + " numbers:");
+        for (i = 0; i < n - 1; i++) {
+            ar[i] = sc.nextInt();
+            cs = cs + ar[i];
+        }
+        int mn = os - cs;
+        System.out.println("Missing no is : " + mn);
+    }
+}
+Sum of odd and even positions
+ar={0-1,1- 2,2-3,3-4,4-5,5-6,6- 7} - so = 2+4+6=12 se=1+3+5+7=16
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        int n, i,se=0,so=0;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter value for n");
+        n = sc.nextInt();
+        int[] ar = new int[n];
+        for (i = 0; i < n; i++) {
+            ar[i]=sc.nextInt();
+            if(i%2==0)
+            {
+            se=se+ar[i];
+            }
+            else
+            {
+                so=so+ar[i];
+            }
+        }
+        System.out.println("Sum of Odd : " + so);
+        System.out.println("Sum of Even: "+se);
+    }
+}
+Frequency of an element
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] ar = new int[n];
+        for (int i = 0; i < n; i++) {
+            ar[i] = sc.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            boolean visited = false;
+            for (int j = 0; j < i; j++) {
+                if (ar[i] == ar[j]) {
+                    visited = true;
+                    break;
+                }
+            }
+
+            if (visited)
+                continue;
+            int count = 0;
+            for (int j = 0; j < n; j++) {
+                if (ar[i] == ar[j]) {
+                    count++;
+                }
+            }
+            System.out.println(ar[i] + " occurs " + count + " times");
+        }
+    }
+}
+Seperate even and odd elements
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter max value for an array: ");
+        int n = sc.nextInt();
+        int[] ar = new int[n];
+        int[] ae=new int[n];
+        int[] ao=new int[n];
+        System.out.println("Enter values to array: ");
+        for(int i=0;i<n;i++)
+        {
+            ar[i]=sc.nextInt();
+            if(ar[i]%2==0)
+            {
+                ae[i]=ar[i];
+                System.out.println("Even Elements are :"+ae[i]);
+            }
+            else
+            {
+                ao[i]=ar[i];
+                System.out.println("Odd Elements are :"+ao[i]);
+            }
+        }
+        
+    }
+}
+Get the array elements until enter sentinal value(-1)
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] ar = new int[n];
+        System.out.println("Enter values to array (-1) to stop");
+        for(int i=0;i<n;i++)
+        {
+            ar[i]=sc.nextInt();
+            if(ar[i]==-1)
+            {
+                break;
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            System.out.println("Array elements are :"+ar[i]);
+        }
+    }
+}
+
+Print Duplicate Elements
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] ar = new int[n];
+        for (int i = 0; i < n; i++) {
+            ar[i] = sc.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            boolean visited = false;
+            for (int j = 0; j < i; j++) {
+                if (ar[i] == ar[j]) {
+                    visited = true;
+                    break;
+                }
+            }
+
+            if (visited)
+                continue;
+            int count = 0;
+            for (int j = 0; j < n; j++) {
+                if (ar[i] == ar[j]) {
+                    count++;
+                }
+            }
+            System.out.println(ar[i] + " occurs " + count + " times");
+        }
+    }
+}
+
+Print Distinct Elements
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] ar = new int[n];
+        for (int i = 0; i < n; i++) {
+            ar[i] = sc.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            boolean visited = false;
+            for (int j = 0; j < i; j++) {
+                if (ar[i] == ar[j]) {
+                    visited = true;
+                    break;
+                }
+            }
+
+            if (visited)
+                continue;
+            int count = 0;
+            for (int j = 0; j < n; j++) {
+                if (ar[i] == ar[j]) {
+                    count++;
+                }
+            }
+            System.out.println(ar[i] + " occurs " + count + " times");
+        }
+    }
+}
+
+Linked List
+Swap Two Nodes
+Middle node
+Detect cycle
+Remove nth node
+Merge sorted list
+Flatten linked list
+Clone linked list  

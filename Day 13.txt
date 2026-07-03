@@ -1,0 +1,290 @@
+Non Linear DSA
+
+Tree
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+public class Main {
+
+    // Preorder Traversal
+    static void preorder(Node root) {
+        if (root == null) {
+            return;
+        }
+        System.out.print(root.data + " ");
+        preorder(root.left);
+        preorder(root.right);
+    }
+    public static void main(String[] args) {
+        // Create nodes
+        Node root = new Node(10);
+        root.left = new Node(20);
+        root.right = new Node(30);
+        root.left.left = new Node(40);
+        root.left.right = new Node(50);
+        System.out.println("Preorder Traversal:");
+        preorder(root);
+    }
+}
+
+In order
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+public class Main {
+
+    static void inorder(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        inorder(root.left);
+        System.out.print(root.data + " ");
+        inorder(root.right);
+    }
+
+    public static void main(String[] args) {
+
+        Node root = new Node(10);
+        root.left = new Node(20);
+        root.right = new Node(30);
+        root.left.left = new Node(40);
+        root.left.right = new Node(50);
+
+        System.out.println("Inorder Traversal:");
+        inorder(root);
+    }
+}
+Post Order
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+public class Main {
+
+    static void postorder(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        postorder(root.left);
+        postorder(root.right);
+        System.out.print(root.data + " ");
+    }
+
+    public static void main(String[] args) {
+
+        Node root = new Node(10);
+        root.left = new Node(20);
+        root.right = new Node(30);
+        root.left.left = new Node(40);
+        root.left.right = new Node(50);
+
+        System.out.println("Postorder Traversal:");
+        postorder(root);
+    }
+}
+Level order Traversal using queue
+import java.util.*;
+class Node {
+    int data;
+    Node left, right;
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+public class Main {
+    static void levelOrder(Node root) {
+        if (root == null) {
+            return;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            System.out.print(current.data + " ");
+            if (current.left != null) {
+                queue.add(current.left);
+            }
+            if (current.right != null) {
+                queue.add(current.right);
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Node root = new Node(10);
+        root.left = new Node(20);
+        root.right = new Node(30);
+        root.left.left = new Node(40);
+        root.left.right = new Node(50);
+        System.out.println("Level Order Traversal:");
+        levelOrder(root);
+    }
+}
+Creation of tree using collection frame work
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Integer> tree = new ArrayList<>();
+        tree.add(10); // root
+        tree.add(20); // left child
+        tree.add(30); // right child
+        tree.add(40); // left child of 20
+        tree.add(50); // right child of 20
+        System.out.println(tree);
+    }
+}
+DFS in Tree
+class Node {
+    int data;
+    Node left, right;
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+public class Main {
+    static void dfs(Node root) {
+        if (root == null) {
+            return;
+        }
+        System.out.print(root.data + " ");
+        dfs(root.left);
+        dfs(root.right);
+    }
+    public static void main(String[] args) {
+        Node root = new Node(10);
+        root.left = new Node(20);
+        root.right = new Node(30);
+        root.left.left = new Node(40);
+        root.left.right = new Node(50);
+        System.out.println("DFS Traversal:");
+        dfs(root);
+    }
+}
+BST(Binary Search Tree) A tree should have minimum two nodes left
+and right left should be less than root , right should be greater than root
+
+import java.util.Scanner;
+class Node {
+    int data;
+    Node left;
+    Node right;
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+public class Main {
+    // Insert a node into BST
+    static Node insert(Node root, int data) {
+        if (root == null) {
+            return new Node(data);
+        }
+        if (data < root.data) {
+            root.left = insert(root.left, data);
+        } else if (data > root.data) {
+            root.right = insert(root.right, data);
+        }
+        return root;
+    }
+    // Inorder Traversal
+    static void inorder(Node root) {
+        if (root != null) {
+            inorder(root.left);
+            System.out.print(root.data + " ");
+            inorder(root.right);
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of nodes: ");
+        int n = sc.nextInt();
+        Node root = null;
+        System.out.println("Enter " + n + " values:");
+        for (int i = 0; i < n; i++) {
+            int value = sc.nextInt();
+            root = insert(root, value);
+        }
+        System.out.println("Inorder Traversal:");
+        inorder(root);
+        sc.close();
+    }
+}
+Binary Tree( A tree should have minimum 2 nodes )
+class Node {
+    int data;
+    Node left;
+    Node right;
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+public class Main {
+    // Inorder Traversal
+    static void inorder(Node root) {
+        if (root != null) {
+            inorder(root.left);
+            System.out.print(root.data + " ");
+            inorder(root.right);
+        }
+    }
+    // Preorder Traversal
+    static void preorder(Node root) {
+        if (root != null) {
+            System.out.print(root.data + " ");
+            preorder(root.left);
+            preorder(root.right);
+        }
+    }
+    // Postorder Traversal
+    static void postorder(Node root) {
+        if (root != null) {
+            postorder(root.left);
+            postorder(root.right);
+            System.out.print(root.data + " ");
+        }
+    }
+    public static void main(String[] args) {
+        // Creating nodes
+        Node root = new Node(10);
+        root.left = new Node(20);
+        root.right = new Node(30);
+        root.left.left = new Node(40);
+        root.left.right = new Node(50);
+        root.right.left = new Node(60);
+        System.out.println("Inorder Traversal:");
+        inorder(root);
+        System.out.println("\nPreorder Traversal:");
+        preorder(root);
+        System.out.println("\nPostorder Traversal:");
+        postorder(root);
+    }
+}
+
