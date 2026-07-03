@@ -1,0 +1,201 @@
+Linear Search -DIY
+1. Find the first occurance of a number and return the index 
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 20, 40, 20, 50};
+        int key = 20;
+        int index = -1;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                index = i;
+                break; 
+            }
+        }
+
+        if (index != -1)
+            System.out.println("First occurrence found at index " + index);
+        else
+            System.out.println("Element not found");
+    }
+}
+2. Find the target sum of two elements of an array- Leetcode 1
+Brute Force Algorithm
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, 7, 3, 11, 15};
+        int target = 10;
+        boolean found = false;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] + arr[j] == target) {
+                    System.out.println("Pair found at indices: " + i + " and " + j);
+                    System.out.println("Elements are: " + arr[i] + " and " + arr[j]);
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
+                break;
+        }
+        if (!found)
+            System.out.println("No pair found");
+    }
+}
+With time complexity of O(n) using HashMap
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, 7, 11, 15};
+        int target = 9;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            int complement = target - arr[i];
+            if (map.containsKey(complement)) {
+                System.out.println("Pair found at indices: "
+                        + map.get(complement) + " and " + i);
+                return;
+            }
+
+            map.put(arr[i], i);
+        }
+        System.out.println("No pair found");
+    }
+}
+
+3. Find the single number of an array
+ import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2,3,5,4,2,3,4};
+        int result=0;
+        for(int num:arr)
+        {
+            result^=num;
+        }
+       System.out.println("Unique Element "+ result);
+    }
+}
+M2:
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2,3,5,4,2,3,4};
+        HashSet<Integer> h =new HashSet<Integer>();
+        for(int n: arr)
+        {
+            if(!h.contains(n))
+            {
+            h.add(n);
+            }
+        else
+        {
+             h.remove(n);    
+        }
+        }
+        System.out.println(h);
+        
+    }
+}
+4. Find the last occurance of a number and return the index 
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2,3,5,4,2,3,4};
+        int e= 4,k=0;
+          for(int i=0;i<arr.length;i++)
+          {
+              if(arr[i]==e)
+              {
+                  k=i;
+              }
+          }
+          System.out.println(k);
+    }
+}
+5. Find the numbers with even number of digits - Leetcode 1295
+ar={ 2,21,123,1234,12345}
+output: 2 {21,1234}
+import java.util.*;
+public class Main{
+    public static void main(String[] args) {
+        Scanner sc =new Scanner(System.in);
+        int arr[]={1,12,123,1234,12345};
+        for(int i=0;i<arr.length;i++){
+            int temp = arr[i];
+            int len = 0;
+            while(temp>0){
+                len++;
+                temp/=10;
+            }
+            if(len%2==0){
+                System.out.println(arr[i]);
+            }
+        }
+    }       
+}
+M2:
+import java.util.*;
+
+public class Main {
+
+    public static int countDigits(int num){
+      int cnt = 0;
+      while(num>0){
+        cnt++;
+        num/=10;
+      }
+      return cnt;
+    }
+    public static void main(String[] args) {
+        int[] arr = {31,456,234,6543,90,12,89,5,6};
+
+        int cnt =0;
+
+
+        for(int n :arr){
+          if(countDigits(n)%2==0)
+          {
+            cnt++;
+            System.out.print(n+" ");
+          }
+
+        }
+        System.out.println("\nCount "+cnt);
+    }
+}
+6. Check if N and its double exists - Leetcode 1346
+
+7. Richest customer wealth- Leetcode 1672
+
+8. Find the maximum n in an array
+
+9. Search insert position - Leetcode 35
+
+10. First & Last Position of an element - Leetcode 34
+
+11. Majority element - Leetcode 169
+
+12. Find peak element - Leetcode 162
+
+13. Single Number - Leetcode 136
+ 
+
+
+
+
+
+
+1. Count the Number of Nodes in a Binary Tree (Ruthran)
+2. Find the Height of a Binary Tree (Dheysheemma)
+3. Check Whether Two Trees are Identical (Vidhyunmaa) 
+4. Find the Sum of All Nodes (Sadhya)
+5. Check Whether a Binary Tree is Balanced (Bhuvanesh)
+6. Count the Number of Leaf Nodes (Sanjay)
+7. Search for a Value in a Binary Tree(Riyaz) 
+
+
+
+
+
+
+

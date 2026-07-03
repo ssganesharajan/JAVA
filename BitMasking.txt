@@ -1,0 +1,54 @@
+1. Setting a Bit
+In this technique, we set a particular bit to 1 without touching any of the other bits. 
+For this, we use the bitwise OR ( | ) operator and the left shift (<<) operator.
+Basically, we take the integer 1 and using the left shift operator, shift the binary 
+representation of 1 (that is 1 only) to n places where (n+1) is the place of bit which 
+we want to set. Then using the bitwise OR operator we turn the given number's 
+(n+1)th bit to 1.
+Syntax
+number | (1 << bit_position_to_set)
+#include <stdio.h>
+int main()
+{
+    int x = 13;
+    printf("Ans: %d", 13 | (1 << 5));
+}
+2. Clearing a Bit
+In this operation, we set a specific bit to 0 (as opposed to 1 in the previous case) 
+without touching any of the other bits. We use the bitwise AND operator (&), 
+bitwise NOT operator (~), and the left shift operator (<<) to achieve the task.
+Basically, we again take 1 and shift it the the specified position. Then, we perform
+the NOT operation on this to convert that into a 0 and other bits of the value (1<<n) to 1.
+Then we do the AND operation to clear the specified bit and obtain the result.
+Syntax:
+number & ~(1 << bit_position_to_clear)
+#include<stdio.h>
+int main() {
+    int x = 13;
+    printf("Ans: %d", 13 & ~(1 << 2) );
+}
+3. Flipping a Bit
+In this operation, we flip a specific bit that is if the bit is 0 then turn it to 1 else turn it to 0.
+This operation requires the use of bitwise XOR (^) operator along with the left shift (<<) operator.
+Basically, as in previous operations, we shift 1 to the specified number of positions and then 
+perform the XOR operation to flip the bit of the given number.
+Syntax:
+number ^ (1 << bit_position_to_flip)
+#include<stdio.h>
+int main() {
+    int x = 13;
+    printf("Ans: %d", 13 ^ (1 << 3) );
+ }
+4. Checking a Bit
+In this operation, we check if a particular bit is 1 or not using the bitwise AND operator (&) 
+along with the left shift operator (<<).
+We shift 1 using the left shift operator to the specified position and then perform the 
+bitwise AND operation on that so as to check if that specific bit is 0 or 1. If the bit is 0 
+then the result would be 0 else the result would be 2^(bit_position).
+Syntax:
+number & (1 << bit_position_to_check)
+#include<stdio.h>
+int main() {
+     printf("Ans: %d \n", 13 & (1 << 3) );
+    printf("Ans: %d \n", 13 & (1 << 4) );
+ }
