@@ -1,0 +1,484 @@
+Heap DS - Max, Min
+
+Root = (i-1)/2
+Left = (2xi)+1
+Right = (2xi)+2
+
+Min Heap using priority queue
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        int arr[] = {45, 12, 78, 3, 56, 90, 1, 67, 23, 8};
+        for (int x : arr) {
+            minHeap.offer(x);
+        }
+        System.out.println("Priority Queue : " + minHeap);
+        System.out.println("Top Element : " + minHeap.peek());
+        System.out.println("Remove Top Element: "+minHeap.poll());
+        System.out.println("Priority Queue : " + minHeap);
+        }
+}
+
+---
+
+1. Implement a min heap without using java priority queue
+insert method-use insertion sort
+remove peek element
+display 
+public class Main {
+     int[] heap = new int[20];   
+    int size = 0;               
+    public void insert(int value) {
+        heap[size] = value;
+        int current = size;
+        while (current > 0) {
+            int parent = (current - 1) / 2;
+            if (heap[current] < heap[parent]) {
+                int temp = heap[current];
+                heap[current] = heap[parent];
+                heap[parent] = temp;
+                current = parent;
+            } else {
+                break;
+            }
+        }
+        size++;
+    }
+    public void display() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(heap[i] + " ");
+        }
+        System.out.println();
+    }
+    public int peek() {
+        if (size == 0) {
+            System.out.println("Heap is Empty");
+            return -1;
+        }
+        return heap[0];
+    }
+    public int remove() {
+        if (size == 0) {
+            System.out.println("Heap is Empty");
+            return -1;
+        }
+        int removed = heap[0];
+        heap[0] = heap[size - 1];
+        size--;
+        int current = 0;
+        while (true) {
+            int left = 2 * current + 1;
+            int right = 2 * current + 2;
+            int smallest = current;
+            if (left < size && heap[left] < heap[smallest]) {
+                smallest = left;
+            }
+            if (right < size && heap[right] < heap[smallest]) {
+                smallest = right;
+            }
+
+            if (smallest != current) {
+                int temp = heap[current];
+                heap[current] = heap[smallest];
+                heap[smallest] = temp;
+                current = smallest;
+            } else {
+                break;
+            }
+        }
+        return removed;
+    }
+
+public static void main(String[] args) {
+        Main obj = new Main();
+        obj.insert(45);
+        obj.insert(12);
+        obj.insert(78);
+        obj.insert(3);
+        obj.insert(56);
+        obj.insert(90);
+        obj.insert(1);
+        obj.insert(67);
+        obj.insert(23);
+        obj.insert(8);
+        System.out.println("Heap Elements");
+        obj.display();
+        System.out.println("Peek Element = " + obj.peek());
+        System.out.println("Deleted Element = " + obj.remove());
+        System.out.println("Heap After Deletion");
+        obj.display();
+    }
+}
+
+---
+
+2. Find the kth smallest element
+Sort the array
+get k from user 
+find the kth min element
+eg:-ar={12,3,5,7,19}
+k=3
+output :7
+
+import java.util.*;
+public class Main {
+    public static void sortArray(int arr[]) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+    public static int kthSmallest(int arr[], int k) {
+        sortArray(arr);
+        return arr[k - 1];
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int arr[] = {12, 3, 5, 7, 19};
+        System.out.print("Enter the value of k: ");
+        int k = sc.nextInt();
+        if (k <= 0 || k > arr.length) {
+            System.out.println("Invalid value of k");
+        } else {
+            System.out.print("Sorted Array: ");
+            sortArray(arr);
+            for (int i = 0; i < arr.length; i++) {
+             System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+            System.out.println(k + "rd Smallest Element = " + arr[k - 1]);
+        }  
+    }
+}
+
+---
+
+3. Heap Sort using min heap
+eg:ar={45,12,78,3,56,90,1}
+output: 1,3,12,45,56,78,90
+create an array 
+repeatedly remove smallest element and store in another array
+public class Main {
+
+    int[] heap = new int[20];
+    int size = 0;
+    public void insert(int value) {
+        heap[size] = value;
+        int current = size;
+        while (current > 0) {
+            int parent = (current - 1) / 2;
+            if (heap[current] < heap[parent]) {
+                int temp = heap[current];
+                heap[current] = heap[parent];
+                heap[parent] = temp;
+                current = parent;
+            } else {
+                break;
+            }
+        }
+
+        size++;
+    }
+
+    public int remove() {
+        int removed = heap[0];
+        heap[0] = heap[size - 1];
+        size--;
+        int current = 0;
+        while (true) {
+            int left = 2 * current + 1;
+            int right = 2 * current + 2;
+            int smallest = current;
+            if (left < size && heap[left] < heap[smallest])
+                smallest = left;
+            if (right < size && heap[right] < heap[smallest])
+                smallest = right;
+            if (smallest != current) {
+                int temp = heap[current];
+                heap[current] = heap[smallest];
+                heap[smallest] = temp;
+                current = smallest;
+
+            } else {
+                break;
+            }
+        }
+        return removed;
+    }
+    public static void main(String[] args) {
+        Main obj = new Main();
+        int arr[] = {45, 12, 78, 3, 56, 90, 1};
+        for (int i = 0; i < arr.length; i++) {
+            obj.insert(arr[i]);
+        }
+
+        int sorted[] = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            sorted[i] = obj.remove();
+        }
+        System.out.println("Sorted Array:");
+        for (int i = 0; i < sorted.length; i++) {
+            System.out.print(sorted[i] + " ");
+        }
+    }
+}
+TC:0(n log n)
+SC- 0(n)
+
+---
+
+Replace the elements in the orginal array 
+public class Main {
+    int[] heap = new int[20];
+    int size = 0;
+     public void insert(int value) {
+        heap[size] = value;
+        int current = size;
+        while (current > 0) {
+            int parent = (current - 1) / 2;
+            if (heap[current] < heap[parent]) {
+                int temp = heap[current];
+                heap[current] = heap[parent];
+                heap[parent] = temp;
+                current = parent;
+            } else {
+                break;
+            }
+        }
+
+        size++;
+    }
+
+    public int remove() {
+        int removed = heap[0];
+        heap[0] = heap[size - 1];
+        size--;
+        int current = 0;
+        while (true) {
+            int left = 2 * current + 1;
+            int right = 2 * current + 2;
+            int smallest = current;
+            if (left < size && heap[left] < heap[smallest]) {
+                smallest = left;
+            }
+            if (right < size && heap[right] < heap[smallest]) {
+                smallest = right;
+            }
+            if (smallest != current) {
+                int temp = heap[current];
+                heap[current] = heap[smallest];
+                heap[smallest] = temp;
+                current = smallest;
+            } else {
+                break;
+            }
+        }
+        return removed;
+    }
+    public void display(int arr[]) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        Main obj = new Main();
+        int arr[] = {45, 12, 78, 3, 56, 90, 1};
+        System.out.print("Original Array : ");
+        obj.display(arr);
+        for (int i = 0; i < arr.length; i++) {
+            obj.insert(arr[i]);
+        }
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = obj.remove();
+        }
+        System.out.print("Sorted Array   : ");
+        obj.display(arr);
+    }
+}
+TC- 0(n log n)
+SC-0(1)
+
+---
+
+4. Merge k sorted array  create a min heap
+a={1,4,5}
+b={2,6,7}
+c={3,8,9}
+Store the first element of each array in a heap
+remove the min element
+repeat the process in the same array
+TC:0(n log k)
+public class Main {
+ static class Node {
+        int value;      
+        int row;        
+        int col;        
+        Node(int value, int row, int col) {
+            this.value = value;
+            this.row = row;
+            this.col = col;
+        }
+    }
+    static Node[] heap = new Node[10];
+    static int size = 0;
+    static void insert(Node node) {
+        heap[size] = node;
+        int current = size;
+        while (current > 0) {
+            int parent = (current - 1) / 2;
+            if (heap[current].value < heap[parent].value) {
+                Node temp = heap[current];
+                heap[current] = heap[parent];
+                heap[parent] = temp;
+                current = parent;
+
+            } else {
+                break;
+            }
+        }
+
+        size++;
+    }
+
+    static Node remove() {
+        Node removed = heap[0];
+        heap[0] = heap[size - 1];
+        size--;
+        int current = 0;
+        while (true) {
+            int left = 2 * current + 1;
+            int right = 2 * current + 2;
+            int smallest = current;
+            if (left < size &&
+                    heap[left].value < heap[smallest].value)
+                smallest = left;
+            if (right < size &&
+                    heap[right].value < heap[smallest].value)
+                smallest = right;
+            if (smallest != current) {
+                Node temp = heap[current];
+                heap[current] = heap[smallest];
+                heap[smallest] = temp;
+                current = smallest;
+
+            } else {
+                break;
+            }
+        }
+
+        return removed;
+    }
+
+    public static void main(String[] args) {
+
+        int[][] arr = {
+                {1, 3, 5},
+                {2, 8, 9},
+                {4, 6, 7}
+        };
+
+        int k = arr.length;
+        for (int i = 0; i < k; i++) {
+            insert(new Node(arr[i][0], i, 0));
+        }
+
+        System.out.println("Merged Array:");
+        while (size > 0) {
+            Node min = remove();
+
+            System.out.print(min.value + " ");
+
+
+            if (min.col + 1 < arr[min.row].length) {
+
+                insert(new Node(
+                        arr[min.row][min.col + 1],
+                        min.row,
+                        min.col + 1));
+            }
+        }
+    }
+}
+
+---
+
+5. Connect the ropes with minimum cost
+int ar={2,4,3,6}
+2+3 = 5 cost 5
+{5,4,6}
+4+5 = cost =5+9=14
+{9,6}
+9+6 = 14+15 =29
+TC:0(n log n)
+SC:0(n)
+public class Main {
+    int[] heap = new int[20];
+    int size = 0;
+    public void insert(int value) {
+        heap[size] = value;
+        int current = size;
+        while (current > 0) {
+            int parent = (current - 1) / 2;
+            if (heap[current] < heap[parent]) {
+                int temp = heap[current];
+                heap[current] = heap[parent];
+                heap[parent] = temp;
+                current = parent;
+            } else {
+                break;
+            }
+        }
+        size++;
+    }
+    public int remove() {
+        int removed = heap[0];
+        heap[0] = heap[size - 1];
+        size--;
+        int current = 0;
+        while (true) {
+            int left = 2 * current + 1;
+            int right = 2 * current + 2;
+            int smallest = current;
+            if (left < size && heap[left] < heap[smallest])
+                smallest = left;
+            if (right < size && heap[right] < heap[smallest])
+                smallest = right;
+            if (smallest != current) {
+                int temp = heap[current];
+                heap[current] = heap[smallest];
+                heap[smallest] = temp;
+                current = smallest;
+
+            } else {
+                break;
+            }
+        }
+        return removed;
+    }
+    public static void main(String[] args) {
+        Main obj = new Main();
+        int arr[] = {2, 4, 3, 6};
+        for (int i = 0; i < arr.length; i++) {
+            obj.insert(arr[i]);
+        }
+        int totalCost = 0;
+        while (obj.size > 1) {
+            int first = obj.remove();
+            int second = obj.remove();
+            int cost = first + second;
+            totalCost += cost;
+            System.out.println(first + " + " + second + " = " + cost
+                    + "   Total Cost = " + totalCost);
+            obj.insert(cost);
+        }
+        System.out.println("\nMinimum Cost = " + totalCost);
+    }
+}
