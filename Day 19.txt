@@ -1,0 +1,386 @@
+Threads in Java
+	Start(), run(), sleep(), joint(), isAlive(), currentthread()
+
+class Main extends Thread{
+    @Override
+    public void run(){
+        System.out.println("Thread is running...");
+        System.out.println("Current thread: "+Thread.currentThread().getName());
+        for(int i=1;i<=5;i++){
+            System.out.println("Count= "+i);
+            try{
+                Thread.sleep(5000);
+            }
+            catch(InterruptedException e){
+                System.out.println("Thread interrupted");
+            }
+        }
+        System.out.println("Thread execution completed.");
+    }
+    
+    public static void main(String[] args){
+        System.out.println("Main thread started");
+        Main t = new Main();
+        t.start();
+        System.out.println("Main thread continues...");
+        System.out.println("Main thread Name: " + Thread.currentThread().getName());
+        System.out.println("Main thread finished");
+    }
+}
+
+----
+
+//Threads using Lambda
+public class Main{
+    public static void main(String[] args){
+        Thread t= new Thread(() -> {
+            System.out.println("Child thread started");
+        });
+        t.start();
+        System.out.println("Main thread started");
+    }
+}
+
+----
+
+class Addition extends Thread{
+    public void run(){
+        int a=10;
+        int b=20;
+        System.out.println("Addition="+(a+b));
+    }
+}
+
+class Subtraction extends Thread{
+    public void run(){
+        int a=20;
+        int b=10;
+        System.out.println("Subtraction="+(a-b));
+    }
+}
+
+class Multiplication extends Thread{
+    public void run(){
+        int a=6;
+        int b=7;
+        System.out.println("Multiplication="+(a*b));
+    }
+}
+
+class Division extends Thread{
+    public void run(){
+        int a=40;
+        int b=8;
+        System.out.println("Division="+(a/b));
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Addition t1=new Addition();
+        Subtraction t2= new Subtraction();
+        Multiplication t3= new Multiplication();
+        Division t4 = new Division();
+        
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+    }
+}
+
+----
+
+public class Main{
+    public static void main(String[] args){
+        Thread addition = new Thread(() -> {
+            int a = 10;
+            int b = 20;
+            System.out.println("Addition="+(a+b));
+        });
+        Thread subtraction = new Thread(() -> {
+            int a = 20;
+            int b = 5;
+            System.out.println("subtraction="+(a-b));
+        });
+        Thread multiplication = new Thread(() -> {
+            int a = 6;
+            int b = 7;
+            System.out.println("multiplication="+(a*b));
+        });
+        Thread division = new Thread(() -> {
+            int a = 40;
+            int b = 8;
+            System.out.println("division="+(a/b));
+        });
+        
+        addition.start();
+        subtraction.start();
+        multiplication.start();
+        division.start();
+    }
+}
+
+----
+//single thread
+public class Main{
+    public static void main(String[] args){
+        Thread t = new Thread(() -> {
+            for (int i=1;i<=10;i++){
+                System.out.println(i);
+            }
+        });
+        t.start();
+    }
+}
+
+----
+
+public class Main{
+    public static void main(String[] args){
+        Thread alphabet = new Thread(() -> {
+            for (char ch='A';ch<='Z';ch++){
+                System.out.println(ch);
+            }
+        });
+        alphabet.start();
+    }
+}
+
+----
+
+public class Main{
+    public static void main(String[] args){
+        Thread even = new Thread(() -> {
+            for (int i=1;i<=20;i++){
+                if(i%2==0){
+                    System.out.println(i);
+                }
+            }
+        });
+        even.start();
+    }
+}
+
+----
+
+public class Main{
+    public static void main(String[] args){
+        Thread odd = new Thread(() -> {
+            for (int i=1;i<=20;i++){
+                if(i%2 != 0){
+                    System.out.println(i);
+                }
+            }
+        });
+        odd.start();
+    }
+}
+
+----
+
+import java.util.*;
+public class Main{
+    public static void main(String[] args){
+        int coins[] = {10,5,2,1};
+        int amount= 18;
+        System.out.println("Coins used:");
+        for(int coin:coins){
+            while(amount >= coin){
+                amount = amount - coin;
+                System.out.print(coin + " ");
+            }
+        }
+    }
+}
+
+----
+//Greedy
+import java.util.*;
+
+class Item {
+    int profit, weight;
+
+    Item(int profit, int weight) {
+        this.profit = profit;
+        this.weight = weight;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        int capacity = 50;
+
+        Item[] items = {
+            new Item(60, 10),
+            new Item(100, 20),
+            new Item(120, 30)
+        };
+
+        // Sort by profit/weight ratio in descending order
+        Arrays.sort(items, (a, b) -> {
+            double r1 = (double) a.profit / a.weight;
+            double r2 = (double) b.profit / b.weight;
+            return Double.compare(r2, r1);
+        });
+
+        double totalProfit = 0.0;
+
+        for (Item item : items) {
+
+            if (capacity >= item.weight) {
+                capacity -= item.weight;
+                totalProfit += item.profit;
+
+                System.out.println("Taken full item -> Profit: "
+                        + item.profit + ", Weight: " + item.weight);
+            } else {
+                double fraction = (double) capacity / item.weight;
+                totalProfit += item.profit * fraction;
+
+                System.out.println("Taken "
+                        + (fraction * 100) + "% of item -> Profit: "
+                        + (item.profit * fraction));
+                break;
+            }
+        }
+
+        System.out.println("Maximum Profit = " + totalProfit);
+    }
+}
+
+----
+//Greedy
+import java.util.*;
+
+class Activity{
+    int start, end;
+    Activity(int start, int end){
+        this.start= start;
+        this.end = end;
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Activity[] activities ={
+            new Activity(1,3),
+            new Activity(2,4),
+            new Activity(3,5),
+            new Activity(0,6),
+            new Activity(5,7),
+            new Activity(8,9)
+        };
+        
+        //sort it by end time
+        Arrays.sort(activities,(a,b) -> a.end-b.end);
+        System.out.println("Selected Activities: ");
+        
+        //select first Activity
+        int lastEnd = activities[0].end;
+        System.out.println("("+activities[0].start+","+activities[0].end+")");
+        
+        //check remaining activities
+        for (int i=1;i<activities.length;i++){
+            if(activities[i].start>=lastEnd){
+                System.out.println("("+activities[i].start+","+activities[i].end+")");
+                lastEnd = activities[i].end;
+            }
+        }
+    }
+}
+
+----
+//Greedy
+import java.util.*;
+
+class Job {
+    String id;
+    int deadline;
+    int profit;
+
+    Job(String id, int deadline, int profit) {
+        this.id = id;
+        this.deadline = deadline;
+        this.profit = profit;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Job[] jobs = {
+            new Job("J1", 2, 100),
+            new Job("J2", 1, 19),
+            new Job("J3", 2, 27),
+            new Job("J4", 1, 25),
+            new Job("J5", 3, 15)
+        };
+
+        // Sort jobs by profit (descending)
+        Arrays.sort(jobs, (a, b) -> b.profit - a.profit);
+
+        // Find maximum deadline
+        int maxDeadline = 0;
+        for (Job job : jobs) {
+            maxDeadline = Math.max(maxDeadline, job.deadline);
+        }
+
+        // Create slots
+        String[] slots = new String[maxDeadline];
+        int totalProfit = 0;
+
+        // Schedule jobs
+        for (Job job : jobs) {
+            for (int j = job.deadline - 1; j >= 0; j--) {
+                if (slots[j] == null) {
+                    slots[j] = job.id;
+                    totalProfit += job.profit;
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Selected Jobs:");
+        for (String s : slots) {
+            if (s != null) {
+                System.out.print(s + " ");
+            }
+        }
+
+        System.out.println("\nTotal Profit: " + totalProfit);
+    }
+}
+
+----
+//Greedy
+import java.util.*;
+
+public class Main{
+    public static void main(String[] args){
+        int greed[]={1,2,3};
+        int cookies[]={1,1};
+        
+        Arrays.sort(greed);
+        Arrays.sort(cookies);
+        
+        int child = 0;
+        int cookie = 0;
+        int satisfied=0;
+        
+        while(child<greed.length && cookie<cookies.length){
+            if(cookies[cookie]>=greed[child]){
+                satisfied++;
+                child++;
+                cookie++;
+            }
+            else{
+                cookie++;
+            }
+        }
+        System.out.println("satisfied child:"+satisfied);
+    }
+}
+
+----
