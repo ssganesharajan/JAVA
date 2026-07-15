@@ -1,0 +1,473 @@
+SOLID Principles
+1. Single responsible Principles
+2. Open closed Principles
+3. Liskov substitution Principles
+4. Interface segregation Principles
+5. Dependency inversion Principles
+
+----
+
+SOLID Principles
+1. S - Single Responsibility Principle (SRP)
+import java.util.Scanner;
+class Employee {
+    private int empId;
+    private String empName;
+    private double basicSalary;
+    private double hra;
+    Employee(int empId, String empName, double basicSalary, double hra) {
+        this.empId = empId;
+        this.empName = empName;
+        this.basicSalary = basicSalary;
+        this.hra = hra;
+    }
+    public int getEmpId() {
+        return empId;
+    }
+    public String getEmpName() {
+        return empName;
+    }
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+    public double getHra() {
+        return hra;
+    }
+}
+class SalaryCalculator {
+    private double incentive;
+    private double netSalary;
+    public void calculateSalary(Employee emp) {
+        incentive = emp.getBasicSalary() * 0.05;
+        netSalary = emp.getBasicSalary()
+                + emp.getHra()
+                + incentive;
+    }
+    public double getIncentive() {
+        return incentive;
+    }
+    public double getNetSalary() {
+        return netSalary;
+    }
+}
+
+class ReportGenerator {
+    public void generateReport(Employee emp, SalaryCalculator salary) {
+        System.out.println("\n========== EMPLOYEE REPORT ==========");
+        System.out.println("Employee ID      : " + emp.getEmpId());
+        System.out.println("Employee Name    : " + emp.getEmpName());
+        System.out.println("Basic Salary     : " + emp.getBasicSalary());
+        System.out.println("HRA              : " + emp.getHra());
+        System.out.println("Incentive (5%)   : " + salary.getIncentive());
+        System.out.println("Net Salary       : " + salary.getNetSalary());
+        System.out.println("=====================================");
+    }
+}
+
+// Driver Class
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Employee ID : ");
+        int empId = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Enter Employee Name : ");
+        String empName = sc.nextLine();
+        System.out.print("Enter Basic Salary : ");
+        double basicSalary = sc.nextDouble();
+        System.out.print("Enter HRA : ");
+        double hra = sc.nextDouble();
+        Employee employee = new Employee(empId, empName, basicSalary, hra);
+        SalaryCalculator calculator = new SalaryCalculator();
+        calculator.calculateSalary(employee);
+        ReportGenerator report = new ReportGenerator();
+        report.generateReport(employee, calculator);
+    }
+}
+
+2. O - Open/Closed Principle (OCP)
+
+import java.util.Scanner;
+class Employee {
+    private int empId;
+    private String empName;
+    private double basicSalary;
+    private double hra;
+    Employee(int empId, String empName, double basicSalary, double hra) {
+        this.empId = empId;
+        this.empName = empName;
+        this.basicSalary = basicSalary;
+        this.hra = hra;
+    }
+    public int getEmpId() {
+        return empId;
+    }
+    public String getEmpName() {
+        return empName;
+    }
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+    public double getHra() {
+        return hra;
+    }
+}
+interface SalaryCalculator {
+    double calculateIncentive(Employee emp);
+    double calculateNetSalary(Employee emp);
+}
+class EmployeeSalaryCalculator implements SalaryCalculator {
+    @Override
+    public double calculateIncentive(Employee emp) {
+        return emp.getBasicSalary() * 0.05;
+    }
+    @Override
+    public double calculateNetSalary(Employee emp) {
+        return emp.getBasicSalary()
+                + emp.getHra()
+                + calculateIncentive(emp);
+    }
+}
+
+class ReportGenerator {
+    public void generateReport(Employee emp, SalaryCalculator calculator) {
+        System.out.println("\n========== EMPLOYEE REPORT ==========");
+        System.out.println("Employee ID      : " + emp.getEmpId());
+        System.out.println("Employee Name    : " + emp.getEmpName());
+        System.out.println("Basic Salary     : " + emp.getBasicSalary());
+        System.out.println("HRA              : " + emp.getHra());
+        System.out.println("Incentive        : " + calculator.calculateIncentive(emp));
+        System.out.println("Net Salary       : " + calculator.calculateNetSalary(emp));
+        System.out.println("=====================================");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Employee ID : ");
+        int empId = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Enter Employee Name : ");
+        String empName = sc.nextLine();
+        System.out.print("Enter Basic Salary : ");
+        double basicSalary = sc.nextDouble();
+        System.out.print("Enter HRA : ");
+        double hra = sc.nextDouble();
+        Employee employee = new Employee(empId, empName, basicSalary, hra);
+        SalaryCalculator calculator = new EmployeeSalaryCalculator();
+        ReportGenerator report = new ReportGenerator();
+        report.generateReport(employee, calculator);
+    }
+}
+3. L - Liskov Substitution Principle (LSP)
+import java.util.Scanner;
+class Employee {
+    private int empId;
+    private String empName;
+    private double basicSalary;
+    private double hra;
+    Employee(int empId, String empName, double basicSalary, double hra) {
+        this.empId = empId;
+        this.empName = empName;
+        this.basicSalary = basicSalary;
+        this.hra = hra;
+    }
+    public int getEmpId() {
+        return empId;
+    }
+    public String getEmpName() {
+        return empName;
+    }
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+    public double getHra() {
+        return hra;
+    }
+}
+interface SalaryCalculator {
+    double calculateIncentive(Employee emp);
+    double calculateNetSalary(Employee emp);
+}
+
+class EmployeeSalaryCalculator implements SalaryCalculator {
+    @Override
+    public double calculateIncentive(Employee emp) {
+        return emp.getBasicSalary() * 0.05;
+    }
+    @Override
+    public double calculateNetSalary(Employee emp) {
+        return emp.getBasicSalary()
+                + emp.getHra()
+                + calculateIncentive(emp);
+    }
+}
+class ManagerSalaryCalculator implements SalaryCalculator {
+    @Override
+    public double calculateIncentive(Employee emp) {
+        return emp.getBasicSalary() * 0.10;
+    }
+    @Override
+    public double calculateNetSalary(Employee emp) {
+        return emp.getBasicSalary()
+                + emp.getHra()
+                + calculateIncentive(emp);
+    }
+}
+class ReportGenerator {
+    public void generateReport(Employee emp, SalaryCalculator calculator) {
+        System.out.println("\n========== EMPLOYEE REPORT ==========");
+        System.out.println("Employee ID      : " + emp.getEmpId());
+        System.out.println("Employee Name    : " + emp.getEmpName());
+        System.out.println("Basic Salary     : " + emp.getBasicSalary());
+        System.out.println("HRA              : " + emp.getHra());
+        System.out.println("Incentive        : " + calculator.calculateIncentive(emp));
+        System.out.println("Net Salary       : " + calculator.calculateNetSalary(emp));
+        System.out.println("=====================================");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Employee ID : ");
+        int empId = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Enter Employee Name : ");
+        String empName = sc.nextLine();
+        System.out.print("Enter Basic Salary : ");
+        double basicSalary = sc.nextDouble();
+        System.out.print("Enter HRA : ");
+        double hra = sc.nextDouble();
+        Employee employee = new Employee(empId, empName, basicSalary, hra);
+        ReportGenerator report = new ReportGenerator();
+        // Parent reference -> Child Object (Employee)
+        SalaryCalculator calculator = new EmployeeSalaryCalculator();
+        report.generateReport(employee, calculator);
+        // Parent reference -> Another Child Object (Manager)
+        calculator = new ManagerSalaryCalculator();
+        report.generateReport(employee, calculator);
+   }
+}	
+4. I - Interface Segregation Principle (ISP)
+import java.util.Scanner;
+class Employee {
+    private int empId;
+    private String empName;
+    private double basicSalary;
+    private double hra;
+    Employee(int empId, String empName, double basicSalary, double hra) {
+        this.empId = empId;
+        this.empName = empName;
+        this.basicSalary = basicSalary;
+        this.hra = hra;
+    }
+    public int getEmpId() {
+        return empId;
+    }
+    public String getEmpName() {
+        return empName;
+    }
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+    public double getHra() {
+        return hra;
+    }
+}
+
+// Small Interface 1
+interface IncentiveCalculator {
+    double calculateIncentive(Employee emp);
+}
+
+// Small Interface 2
+interface NetSalaryCalculator {
+    double calculateNetSalary(Employee emp);
+}
+
+// Employee Salary Calculator
+class EmployeeSalaryCalculator implements IncentiveCalculator, NetSalaryCalculator {
+    @Override
+    public double calculateIncentive(Employee emp) {
+        return emp.getBasicSalary() * 0.05;
+    }
+
+    @Override
+    public double calculateNetSalary(Employee emp) {
+        return emp.getBasicSalary()
+                + emp.getHra()
+                + calculateIncentive(emp);
+    }
+}
+
+// Manager Salary Calculator
+class ManagerSalaryCalculator implements IncentiveCalculator, NetSalaryCalculator {
+    @Override
+    public double calculateIncentive(Employee emp) {
+        return emp.getBasicSalary() * 0.10;
+    }
+    @Override
+    public double calculateNetSalary(Employee emp) {
+        return emp.getBasicSalary()
+                + emp.getHra()
+                + calculateIncentive(emp);
+    }
+}
+
+// Report Generator
+class ReportGenerator {
+
+    public void generateReport(Employee emp,
+                               IncentiveCalculator incentive,
+                               NetSalaryCalculator salary) {
+        System.out.println("\n========== EMPLOYEE REPORT ==========");
+        System.out.println("Employee ID      : " + emp.getEmpId());
+        System.out.println("Employee Name    : " + emp.getEmpName());
+        System.out.println("Basic Salary     : " + emp.getBasicSalary());
+        System.out.println("HRA              : " + emp.getHra());
+        System.out.println("Incentive        : " + incentive.calculateIncentive(emp));
+        System.out.println("Net Salary       : " + salary.calculateNetSalary(emp));
+        System.out.println("=====================================");
+    }
+}
+
+// Driver Class
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Employee ID : ");
+        int empId = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Enter Employee Name : ");
+        String empName = sc.nextLine();
+        System.out.print("Enter Basic Salary : ");
+        double basicSalary = sc.nextDouble();
+        System.out.print("Enter HRA : ");
+        double hra = sc.nextDouble();
+        Employee employee = new Employee(empId, empName, basicSalary, hra);
+        ReportGenerator report = new ReportGenerator();
+        EmployeeSalaryCalculator empCalc = new EmployeeSalaryCalculator();
+        report.generateReport(employee, empCalc, empCalc);
+        ManagerSalaryCalculator mgrCalc = new ManagerSalaryCalculator();
+        report.generateReport(employee, mgrCalc, mgrCalc);
+   }
+}
+5. D - Dependency Inversion Principle (DIP)
+import java.util.Scanner;
+class Employee {
+    private int empId;
+    private String empName;
+    private double basicSalary;
+    private double hra;
+    Employee(int empId, String empName, double basicSalary, double hra) {
+        this.empId = empId;
+        this.empName = empName;
+        this.basicSalary = basicSalary;
+        this.hra = hra;
+    }
+    public int getEmpId() {
+        return empId;
+    }
+    public String getEmpName() {
+        return empName;
+    }
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+    public double getHra() {
+        return hra;
+    }
+}
+
+// Abstraction (Interface)
+interface SalaryService {
+    double calculateIncentive(Employee emp);
+    double calculateNetSalary(Employee emp);
+}
+// Low-Level Module
+class EmployeeSalaryCalculator implements SalaryService {
+    @Override
+    public double calculateIncentive(Employee emp) {
+        return emp.getBasicSalary() * 0.05;
+    }
+    @Override
+    public double calculateNetSalary(Employee emp) {
+        return emp.getBasicSalary()
+                + emp.getHra()
+                + calculateIncentive(emp);
+    }
+}
+
+// Another Low-Level Module
+class ManagerSalaryCalculator implements SalaryService {
+
+    @Override
+    public double calculateIncentive(Employee emp) {
+        return emp.getBasicSalary() * 0.10;
+    }
+
+    @Override
+    public double calculateNetSalary(Employee emp) {
+        return emp.getBasicSalary()
+                + emp.getHra()
+                + calculateIncentive(emp);
+    }
+}
+
+// High-Level Module
+class ReportGenerator {
+    private SalaryService salaryService;
+    // Constructor Injection
+    ReportGenerator(SalaryService salaryService) {
+        this.salaryService = salaryService;
+    }
+    public void generateReport(Employee emp) {
+
+        System.out.println("\n========== EMPLOYEE REPORT ==========");
+        System.out.println("Employee ID      : " + emp.getEmpId());
+        System.out.println("Employee Name    : " + emp.getEmpName());
+        System.out.println("Basic Salary     : " + emp.getBasicSalary());
+        System.out.println("HRA              : " + emp.getHra());
+        System.out.println("Incentive        : "
+                + salaryService.calculateIncentive(emp));
+        System.out.println("Net Salary       : "
+                + salaryService.calculateNetSalary(emp));
+        System.out.println("=====================================");
+    }
+}
+
+// Driver Class
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Employee ID : ");
+        int empId = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Employee Name : ");
+        String empName = sc.nextLine();
+
+        System.out.print("Enter Basic Salary : ");
+        double basicSalary = sc.nextDouble();
+
+        System.out.print("Enter HRA : ");
+        double hra = sc.nextDouble();
+
+        Employee employee = new Employee(empId, empName, basicSalary, hra);
+
+        // Inject Employee Salary Calculator
+        SalaryService service = new EmployeeSalaryCalculator();
+        ReportGenerator report = new ReportGenerator(service);
+        report.generateReport(employee);
+
+        // Switch to Manager Salary Calculator
+        service = new ManagerSalaryCalculator();
+        report = new ReportGenerator(service);
+        report.generateReport(employee);
+    }
+}
+
+----

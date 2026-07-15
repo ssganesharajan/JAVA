@@ -1,0 +1,277 @@
+Student management system with SOLID principles in java
+
+s1. studententity with firlds,getter,setter, constructor
+s2. students repository add(),display(),search(),delete()
+s3. student service update marks, calculate grade, calculate percentage
+s4. Report generate student report
+s5. Main menu driven dynamic input Add, Display, Search, Update, Delete, Report
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Student {
+    private int id;
+    private String name;
+    private int marks1;
+    private int marks2;
+    private int marks3;
+
+    public Student(int id, String name, int marks1, int marks2, int marks3) {
+        this.id = id;
+        this.name = name;
+        this.marks1 = marks1;
+        this.marks2 = marks2;
+        this.marks3 = marks3;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMarks1() {
+        return marks1;
+    }
+
+    public int getMarks2() {
+        return marks2;
+    }
+
+    public int getMarks3() {
+        return marks3;
+    }
+
+    public void setMarks1(int marks1) {
+        this.marks1 = marks1;
+    }
+
+    public void setMarks2(int marks2) {
+        this.marks2 = marks2;
+    }
+
+    public void setMarks3(int marks3) {
+        this.marks3 = marks3;
+    }
+}
+
+class StudentRepository {
+
+    private ArrayList<Student> students = new ArrayList<>();
+
+    public void add(Student student) {
+        students.add(student);
+    }
+
+    public void display() {
+        if (students.isEmpty()) {
+            System.out.println("No students available.");
+            return;
+        }
+
+        for (Student s : students) {
+            System.out.println(s.getId() + " " + s.getName());
+        }
+    }
+
+    public Student search(int id) {
+        for (Student s : students) {
+            if (s.getId() == id)
+                return s;
+        }
+        return null;
+    }
+
+    public boolean delete(int id) {
+        Student s = search(id);
+
+        if (s != null) {
+            students.remove(s);
+            return true;
+        }
+
+        return false;
+    }
+}
+
+class StudentService {
+
+    public void updateMarks(Student student, int m1, int m2, int m3) {
+        student.setMarks1(m1);
+        student.setMarks2(m2);
+        student.setMarks3(m3);
+    }
+
+    public double calculatePercentage(Student student) {
+        return (student.getMarks1() + student.getMarks2() + student.getMarks3()) / 3.0;
+    }
+
+    public String calculateGrade(Student student) {
+
+        double per = calculatePercentage(student);
+
+        if (per >= 90)
+            return "A";
+
+        if (per >= 75)
+            return "B";
+
+        if (per >= 60)
+            return "C";
+
+        if (per >= 40)
+            return "D";
+
+        return "F";
+    }
+}
+
+class ReportGenerator {
+
+    private StudentService service = new StudentService();
+
+    public void generateStudentReport(Student student) {
+
+        if (student == null) {
+            System.out.println("Student not found.");
+            return;
+        }
+
+        System.out.println("\n----- Student Report -----");
+        System.out.println("ID : " + student.getId());
+        System.out.println("Name : " + student.getName());
+        System.out.println("Marks1 : " + student.getMarks1());
+        System.out.println("Marks2 : " + student.getMarks2());
+        System.out.println("Marks3 : " + student.getMarks3());
+        System.out.println("Percentage : " + service.calculatePercentage(student));
+        System.out.println("Grade : " + service.calculateGrade(student));
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        StudentRepository repo = new StudentRepository();
+        StudentService service = new StudentService();
+        ReportGenerator report = new ReportGenerator();
+
+        while (true) {
+
+            System.out.println("\n===== Student Management System =====");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Update Marks");
+            System.out.println("5. Delete Student");
+            System.out.println("6. Generate Report");
+            System.out.println("7. Exit");
+
+            System.out.print("Enter Choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+
+                    System.out.print("Enter ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Marks1: ");
+                    int m1 = sc.nextInt();
+
+                    System.out.print("Enter Marks2: ");
+                    int m2 = sc.nextInt();
+
+                    System.out.print("Enter Marks3: ");
+                    int m3 = sc.nextInt();
+
+                    repo.add(new Student(id, name, m1, m2, m3));
+                    System.out.println("Student Added.");
+                    break;
+
+                case 2:
+                    repo.display();
+                    break;
+
+                case 3:
+
+                    System.out.print("Enter ID: ");
+                    id = sc.nextInt();
+
+                    Student s = repo.search(id);
+
+                    if (s != null)
+                        System.out.println("Found : " + s.getName());
+                    else
+                        System.out.println("Student Not Found");
+
+                    break;
+
+                case 4:
+
+                    System.out.print("Enter ID: ");
+                    id = sc.nextInt();
+
+                    s = repo.search(id);
+
+                    if (s != null) {
+
+                        System.out.print("Enter New Marks1: ");
+                        m1 = sc.nextInt();
+
+                        System.out.print("Enter New Marks2: ");
+                        m2 = sc.nextInt();
+
+                        System.out.print("Enter New Marks3: ");
+                        m3 = sc.nextInt();
+
+                        service.updateMarks(s, m1, m2, m3);
+
+                        System.out.println("Marks Updated.");
+                    } else {
+                        System.out.println("Student Not Found");
+                    }
+
+                    break;
+
+                case 5:
+
+                    System.out.print("Enter ID: ");
+                    id = sc.nextInt();
+
+                    if (repo.delete(id))
+                        System.out.println("Deleted Successfully");
+                    else
+                        System.out.println("Student Not Found");
+
+                    break;
+
+                case 6:
+
+                    System.out.print("Enter ID: ");
+                    id = sc.nextInt();
+
+                    s = repo.search(id);
+                    report.generateStudentReport(s);
+
+                    break;
+
+                case 7:
+                    System.out.println("Thank You");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid Choice");
+            }
+        }
+    }
+}

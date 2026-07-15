@@ -1,0 +1,214 @@
+E-Commerce Website Management with SOLID principles in java
+
+import java.util.Scanner;
+
+// Stores product details
+class Product {
+    private final String name;
+    private final double price;
+
+    Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    double getPrice() {
+        return price;
+    }
+}
+
+// Stores customer details
+class Customer {
+    private final String mobile;
+    private final String email;
+    private final String address;
+
+    Customer(String mobile, String email, String address) {
+        this.mobile = mobile;
+        this.email = email;
+        this.address = address;
+    }
+
+    String getMobile() {
+        return mobile;
+    }
+
+    String getEmail() {
+        return email;
+    }
+
+    String getAddress() {
+        return address;
+    }
+}
+
+// Payment abstraction
+interface PaymentService {
+    boolean pay(double amount);
+}
+
+class CardPayment implements PaymentService {
+    @Override
+    public boolean pay(double amount) {
+        System.out.println("₹" + amount + " paid using Card.");
+        return true;
+    }
+}
+
+class UpiPayment implements PaymentService {
+    @Override
+    public boolean pay(double amount) {
+        System.out.println("₹" + amount + " paid using UPI.");
+        return true;
+    }
+}
+
+class CashOnDelivery implements PaymentService {
+    @Override
+    public boolean pay(double amount) {
+        System.out.println("₹" + amount + " will be paid on delivery.");
+        return true;
+    }
+}
+
+// Notification abstraction
+interface NotificationService {
+    void sendNotification(Customer customer, String message);
+}
+
+// Notification logic is separate from the main method
+class CustomerNotificationService implements NotificationService {
+    @Override
+    public void sendNotification(Customer customer, String message) {
+        System.out.println(
+                "SMS sent to " + customer.getMobile() + ": " + message
+        );
+
+        System.out.println(
+                "Email sent to " + customer.getEmail() + ": " + message
+        );
+    }
+}
+
+// Handles order placement
+class OrderService {
+    private final PaymentService paymentService;
+    private final NotificationService notificationService;
+
+    OrderService(
+            PaymentService paymentService,
+            NotificationService notificationService
+    ) {
+        this.paymentService = paymentService;
+        this.notificationService = notificationService;
+    }
+
+    void placeOrder(Product product, Customer customer) {
+        System.out.println("\n----- ORDER DETAILS -----");
+        System.out.println("Product: " + product.getName());
+        System.out.println("Price: ₹" + product.getPrice());
+        System.out.println("Address: " + customer.getAddress());
+
+        if (paymentService.pay(product.getPrice())) {
+            String message =
+                    "Your order for " + product.getName() +
+                    " has been placed successfully!";
+
+            notificationService.sendNotification(customer, message);
+        } else {
+            notificationService.sendNotification(
+                    customer,
+                    "Payment failed. Your order was not placed."
+            );
+        }
+    }
+}
+
+public class Main {
+
+    // Product selection is kept separate
+    static Product selectProduct(int choice) {
+        return switch (choice) {
+            case 1 -> new Product("Mobile Phone", 20000);
+            case 2 -> new Product("Laptop", 50000);
+            case 3 -> new Product("Headphones", 2000);
+            case 4 -> new Product("Smart Watch", 5000);
+            default -> null;
+        };
+    }
+
+    // Payment selection is kept separate
+    static PaymentService selectPayment(int choice) {
+        return switch (choice) {
+            case 1 -> new CardPayment();
+            case 2 -> new UpiPayment();
+            case 3 -> new CashOnDelivery();
+            default -> null;
+        };
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("----- PRODUCTS -----");
+        System.out.println("1. Mobile Phone  - ₹20,000");
+        System.out.println("2. Laptop        - ₹50,000");
+        System.out.println("3. Headphones    - ₹2,000");
+        System.out.println("4. Smart Watch   - ₹5,000");
+        System.out.print("Select a product: ");
+
+        int productChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        Product product = selectProduct(productChoice);
+
+        if (product == null) {
+            System.out.println("Invalid product choice.");
+            scanner.close();
+            return;
+        }
+
+        System.out.print("Enter mobile number: ");
+        String mobile = scanner.nextLine();
+
+        System.out.print("Enter email address: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter delivery address: ");
+        String address = scanner.nextLine();
+
+        Customer customer = new Customer(mobile, email, address);
+
+        System.out.println("\n----- PAYMENT METHODS -----");
+        System.out.println("1. Card");
+        System.out.println("2. UPI");
+        System.out.println("3. Cash on Delivery");
+        System.out.print("Select payment method: ");
+
+        int paymentChoice = scanner.nextInt();
+
+        PaymentService paymentService = selectPayment(paymentChoice);
+
+        if (paymentService == null) {
+            System.out.println("Invalid payment method.");
+            scanner.close();
+            return;
+        }
+
+        NotificationService notificationService =
+                new CustomerNotificationService();
+
+        OrderService orderService = new OrderService(
+                paymentService,
+                notificationService
+        );
+
+        orderService.placeOrder(product, customer);
+
+        scanner.close();
+    }
+}
