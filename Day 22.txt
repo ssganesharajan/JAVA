@@ -1,0 +1,271 @@
+Low-Level Design (LLD):
+-----------------------
+
+class DatabaseConnection{
+    private static DatabaseConnection instance;
+    private DatabaseConnection(){
+    }
+    public static DatabaseConnection getInstance(){
+        if(instance == null){
+            instance = new DatabaseConnection();
+        }
+        return instance;
+    }
+    public void connect(){
+        System.out.println("Employee Database connected");
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        DatabaseConnection db1 = DatabaseConnection.getInstance();
+        DatabaseConnection db2 = DatabaseConnection.getInstance();
+        db1.connect();
+        System.out.println(db1 == db2);
+    }
+}
+
+----
+
+interface Employee{
+    void work();
+}
+class Developer implements Employee{
+    public void work(){
+        System.out.println("Developer writes code.");
+    }
+}
+class Tester implements Employee{
+    public void work(){
+        System.out.println("Tester tests the application.");
+    }
+}
+class Manager implements Employee{
+    public void work(){
+        System.out.println("Manager manages the team.");
+    }
+}
+class EmployeeFactory{
+    public static Employee getEmployee(String role){
+        if(role.equalsIgnoreCase("Developer"))
+            return new Developer();
+        if(role.equalsIgnoreCase("Tester"))
+            return new Tester();
+        if(role.equalsIgnoreCase("Manager"))
+            return new Manager();
+        return null;
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Employee employee = EmployeeFactory.getEmployee("Tester");
+        employee.work();
+    }
+}
+
+----
+
+interface SalaryStrategy{
+    void calculateSalary(double basicSalary);
+}
+class DeveloperSalary implements SalaryStrategy{
+    public void calculateSalary(double basicSalary){
+        double total = basicSalary + basicSalary*0.10;
+        System.out.println("Developer Salary: " + total);
+    }
+}
+class TesterSalary implements SalaryStrategy{
+    public void calculateSalary(double basicSalary){
+        double total = basicSalary + basicSalary*0.08;
+        System.out.println("Tester Salary: " + total);
+    }
+}
+class ManagerSalary implements SalaryStrategy{
+    public void calculateSalary(double basicSalary){
+        double total = basicSalary + basicSalary*0.15;
+        System.out.println("Manager Salary: " + total);
+    }
+}
+class EmployeeSalary{
+    private SalaryStrategy strategy;
+    EmployeeSalary(SalaryStrategy strategy){
+        this.strategy = strategy;
+    }
+    public void processSalary(double salary){
+        strategy.calculateSalary(salary);
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        EmployeeSalary salary = new EmployeeSalary(new ManagerSalary());
+        salary.processSalary(50000);
+    }
+}
+
+----
+
+import java.util.*;
+interface Observer{
+    void update(String message);
+}
+class HRDepartment implements Observer{
+    public void update(String message){
+        System.out.println("HR: " + message);
+    }
+}
+class PayrollDepartment implements Observer{
+    public void update(String message){
+        System.out.println("Payroll: " + message);
+    }
+}
+class ManagerDepartment implements Observer{
+    public void update(String message){
+        System.out.println("Manager: " + message);
+    }
+}
+class Teaching implements Observer{
+    public void update(String message){
+        System.out.println("Teaching: " + message);
+    }
+}
+class Employee{
+    private List<Observer> observers = new ArrayList<>();
+    public void addObserver(Observer observer){
+        observers.add(observer);
+    }
+    public void notifyObservers(String message){
+        for(Observer observer : observers){
+            observer.update(message);
+        }
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Employee employee = new Employee();
+        employee.addObserver(new HRDepartment());
+        employee.addObserver(new PayrollDepartment());
+        employee.addObserver(new ManagerDepartment());
+        employee.addObserver(new Teaching());
+        employee.notifyObservers("Employee Salary Updated");
+    }
+}
+
+----
+
+import java.util.ArrayList;
+
+class Book {
+    private int bookId;
+    private String title;
+
+    // Constructor
+    public Book(int bookId, String title) {
+        this.bookId = bookId;
+        this.title = title;
+    }
+
+    public void display() {
+        System.out.println(bookId + " - " + title);
+    }
+}
+
+class Library {
+    private static Library instance = new Library();
+    private ArrayList<Book> books = new ArrayList<>();
+
+    private Library() {
+        System.out.println("Library Created");
+    }
+
+    public static Library getInstance() {
+        return instance;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void displayBooks() {
+        for (Book b : books) {
+            b.display();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Library lib1 = Library.getInstance();
+        Library lib2 = Library.getInstance();
+
+        lib1.addBook(new Book(101, "Java"));
+        lib1.addBook(new Book(102, "Python"));
+
+        System.out.println("Books:");
+        lib2.displayBooks();
+
+        System.out.println();
+        System.out.println(lib1 == lib2);
+    }
+}
+
+----
+
+import java.util.ArrayList;
+
+class Book {
+    private int bookId;
+    private String title;
+
+    // Constructor
+    public Book(int bookId, String title) {
+        this.bookId = bookId;
+        this.title = title;
+    }
+
+    public void display() {
+        System.out.println(bookId + " - " + title);
+    }
+}
+class BookFactory{
+    public static Book createBook(int id, String title){
+        return new Book(id, title);
+    }
+}
+class Library {
+    private static Library instance = new Library();
+    private ArrayList<Book> books = new ArrayList<>();
+
+    private Library() {
+        System.out.println("Library Created");
+    }
+
+    public static Library getInstance() {
+        return instance;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void displayBooks() {
+        for (Book b : books) {
+            b.display();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Library library = Library.getInstance();
+        Book b1 = BookFactory.createBook(101,"Java");
+        Book b2 = BookFactory.createBook(102,"Python");
+        Book b3 = BookFactory.createBook(103,"Spring Boot");
+        library.addBook(b1);
+        library.addBook(b2);
+        library.addBook(b3);
+        library.displayBooks();
+    }
+}
+
+----
