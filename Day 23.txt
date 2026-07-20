@@ -1,0 +1,269 @@
+1. UML Diagrams (Unified Modeling Language)
+UML is a visual language used to design software before coding.
+
+class Employee{
+    int id;
+    String name;
+    double salary;
+    Employee(int id,String name, double salary){
+        this.id=id;
+        this.name=name;
+        this.salary=salary;
+    }
+    void work(){
+        System.out.println(name+" is working.");
+    }
+    void displayDetails(){
+        System.out.println("Employee ID: "+id);
+        System.out.println("Employee Name: "+name);
+        System.out.println("Salary: "+salary);
+    }
+}
+
+class Developer extends Employee{
+    String language;
+    Developer(int id, String name, double salary, String language){
+        super(id,name,salary);
+        this.language=language;
+    }
+    void writeCode(){
+        System.out.println(name+" is coding in"+language);
+    }
+    @Override
+    void work(){
+        System.out.println(name+" is developing software.");
+    }
+}
+
+class Manager extends Employee{
+    int teamSize;
+    Manager(int id, String name, double salary, int teamSize){
+        super(id, name, salary);
+        this.teamSize=teamSize;
+    }
+    void manageTeam(){
+        System.out.println(name+" is managing a team of "+teamSize+" members.");
+    }
+    @Override
+    void work(){
+        System.out.println(name+" is managing the project.");
+    }
+}
+
+public class Main{
+    public static void main (String[] args) {
+        Developer dev = new Developer(101, "Riyaz", 75000, "Java");
+        Manager mgr = new Manager(201, "Sanjay", 95000, 8);
+        System.out.println("===== Developer =====");
+        dev.displayDetails();
+        dev.work();
+        dev.writeCode();
+        System.out.println();
+        System.out.println("===== Manager =====");
+        mgr.displayDetails();
+        mgr.work();
+        mgr.manageTeam();
+        System.out.println();
+    }
+}
+
+----
+
+2. Relationships
+Classes can relate in many ways.
+There are five important relationships.
+1.Association
+2.Aggregation
+3.Composition
+4.Inheritance
+5.Dependency
+
+A. Association
+Simple "uses" relationship.
+Example
+Employee works in Department.
+
+class Department{
+    int deptId;
+    String deptName;
+    Department(int deptId, String deptName){
+        this.deptId=deptId;
+        this.deptName=deptName;
+    }
+    void displayDepartment(){
+        System.out.println("Department ID: "+ deptId);
+        System.out.println("Department Name: "+deptName);
+    }
+}
+
+class Employee{
+    int empId;
+    String empName;
+    double salary;
+    Department department;
+    Employee(int empId,String empName, double salary, Department department){
+        this.empId=empId;
+        this.empName=empName;
+        this.salary=salary;
+        this.department=department;
+    }
+    void displayEmployee(){
+        System.out.println("Employee ID: "+empId);
+        System.out.println("Employee Name: "+empName);
+        System.out.println("Salary: "+salary);
+        System.out.println("Department ID: "+department.deptId);
+        System.out.println("Department Name: "+department.deptName);
+    }
+    void work(){
+        System.out.println(empName+" is working in "+department.deptName+" department");
+    }
+}
+
+public class Main{
+    public static void main (String[] args) {
+        Department dep=new Department(101,"Information Technology");
+        Employee emp= new Employee(1001,"surya", 65000, dep);
+        System.out.println("===== Department Details =====");
+        dep.displayDepartment();
+        System.out.println();
+        System.out.println("===== Employee Details =====");
+        emp.displayEmployee();
+        System.out.println();
+        emp.work();
+    }
+}
+
+----
+
+3. Aggregation vs Composition
+Aggregation (HAS-A)
+Weak relationship.
+Objects can exist independently.
+Example
+Department has Employees.
+Even if Department is deleted,
+Employees still exist.
+import java.util.ArrayList;
+import java.util.List;
+class Employee {
+    int empId;
+    String empName;
+    double salary;
+    Employee(int empId, String empName, double salary) {
+        this.empId = empId;
+        this.empName = empName;
+        this.salary = salary;
+    }
+    void displayEmployee() {
+        System.out.println("Employee ID   : " + empId);
+        System.out.println("Employee Name : " + empName);
+        System.out.println("Salary        : " + salary);
+    }
+    void work() {
+        System.out.println(empName + " is working.");
+    }
+}
+class Department {
+    int deptId;
+    String deptName;
+    List<Employee> employees;
+    Department(int deptId, String deptName, List<Employee> employees) {
+        this.deptId = deptId;
+        this.deptName = deptName;
+        this.employees = employees;
+    }
+    void displayDepartment() {
+        System.out.println("Department ID   : " + deptId);
+        System.out.println("Department Name : " + deptName);
+        System.out.println("\nEmployees in Department");
+        for (Employee emp : employees) {
+            System.out.println("-------------------------");
+            emp.displayEmployee();
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Employee emp1 = new Employee(101, "John", 65000);
+        Employee emp2 = new Employee(102, "Alice", 70000);
+        Employee emp3 = new Employee(103, "David", 80000);
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(emp1);
+        employeeList.add(emp2);
+        employeeList.add(emp3);
+        Department dept = new Department(
+                1,
+                "Information Technology",
+                employeeList);
+        System.out.println("========== Department Details ==========");
+        dept.displayDepartment();
+        System.out.println("\n========== Employees Working ==========");
+        emp1.work();
+        emp2.work();
+        emp3.work();
+    }
+}
+4.Composition (Part-of)
+Strong relationship.
+If parent dies,
+Children also die.
+Example
+Employee owns Address.
+Address has no meaning without Employee.
+class Address {
+    String city;
+    Address(String city) {
+        this.city = city;
+    }
+}
+class Employee {
+    private Address address;
+    Employee(String city) {
+        address = new Address(city);
+    }
+    void display() {
+        System.out.println(address.city);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Employee emp = new Employee("Chennai");
+        emp.display();
+    }
+}
+4. Interface-Driven Design
+One of the most important LLD principles.
+Instead of depending on concrete classes,
+depend on interfaces.
+interface EmployeeRepository {
+    void save();
+}
+class MySQLRepository implements EmployeeRepository {
+    public void save() {
+        System.out.println("Saved in MySQL");
+    }
+}
+class OracleRepository implements EmployeeRepository {
+    public void save() {
+        System.out.println("Saved in Oracle");
+    }
+}
+class EmployeeService {
+    private EmployeeRepository repository;
+    EmployeeService(EmployeeRepository repository) {
+        this.repository = repository;
+    }
+    void addEmployee() {
+        repository.save();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        EmployeeRepository repo = new MySQLRepository();
+        EmployeeService service = new EmployeeService(repo);
+        service.addEmployee();
+        repo = new OracleRepository();
+        service = new EmployeeService(repo);
+        service.addEmployee();
+    }
+}

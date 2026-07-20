@@ -1,0 +1,496 @@
+1. Generate All Binary Strings of Length N
+public class Main {
+   public static void generateBinary(int n, String current) {
+        if (current.length() == n) {
+            System.out.println(current);
+            return;
+        }
+        generateBinary(n, current + "0");
+        generateBinary(n, current + "1");
+    }
+    public static void main(String[] args) {
+        int n = 3;
+        System.out.println("All Binary Strings of Length " + n + " are:\n");
+        generateBinary(n, "");
+    }
+}
+
+----
+
+2. You have 2 bikes 'B1' & 'B2'. And 1 car 'C'. 
+Find all possible ways to arrange them. 
+Constraint: Car should not be between bikes.
+optimal java solution 
+public class Main{
+    static String[] vehicles = {"B1", "B2", "C"};
+    static boolean[] used = new boolean[vehicles.length];
+    static String[] result = new String[vehicles.length];
+    static void arrange(int index) {
+        if (index == vehicles.length) {
+            if (isValid()) {
+                for (String s : result) {
+                    System.out.print(s + " ");
+                }
+                System.out.println();
+            }
+            return;
+        }
+        for (int i = 0; i < vehicles.length; i++) {
+            if (!used[i]) {
+                used[i] = true;
+                result[index] = vehicles[i];
+                arrange(index + 1);
+                used[i] = false;
+            }
+        }
+    }
+    static boolean isValid() {
+        int b1 = -1, b2 = -1, c = -1;
+        for (int i = 0; i < result.length; i++) {
+            if (result[i].equals("B1"))
+                b1 = i;
+            else if (result[i].equals("B2"))
+                b2 = i;
+            else
+                c = i;
+        }
+        return !((b1 < c && c < b2) || (b2 < c && c < b1));
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Valid Arrangements:\n");
+        arrange(0);
+    }
+}
+Using java 8 & LLD
+import java.util.ArrayList;
+import java.util.List;
+class Vehicle {
+    private String name;
+    public Vehicle(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
+}
+class Bike extends Vehicle {
+    public Bike(String name) {
+        super(name);
+    }
+}
+
+class Car extends Vehicle {
+    public Car(String name) {
+        super(name);
+    }
+}
+class ArrangementGenerator {
+    private List<Vehicle> vehicles;
+    private boolean[] used;
+    private List<Vehicle> result;
+    public ArrangementGenerator(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+        this.used = new boolean[vehicles.size()];
+        this.result = new ArrayList<>();
+    }
+
+    public void generate() {
+        backtrack();
+    }
+    private void backtrack() {
+        if (result.size() == vehicles.size()) {
+            if (isValid()) {
+                printResult();
+            }
+            return;
+        }
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (!used[i]) {
+                used[i] = true;
+                result.add(vehicles.get(i));
+                backtrack();
+                result.remove(result.size() - 1);
+                used[i] = false;
+            }
+        }
+    }
+    private boolean isValid() {
+        int bike1 = -1;
+        int bike2 = -1;
+        int car = -1;
+        for (int i = 0; i < result.size(); i++) {
+            String name = result.get(i).getName();
+            if (name.equals("B1"))
+                bike1 = i;
+            else if (name.equals("B2"))
+                bike2 = i;
+            else if (name.equals("C"))
+                car = i;
+        }
+
+        return !((bike1 < car && car < bike2) ||
+                 (bike2 < car && car < bike1));
+    }
+    private void printResult() {
+        for (Vehicle vehicle : result) {
+            System.out.print(vehicle.getName() + " ");
+        }
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles.add(new Bike("B1"));
+        vehicles.add(new Bike("B2"));
+        vehicles.add(new Car("C"));
+        ArrangementGenerator generator = new ArrangementGenerator(vehicles);
+        System.out.println("Valid Arrangements:\n");
+        generator.generate();
+    }
+}
+
+----
+
+3. N-Queens - Google / Amazon / Microsoft
+class Board {
+    private int[][] board;
+    private int size;
+    public Board(int size) {
+        this.size = size;
+        board = new int[size][size];
+    }
+    public int getSize() {
+        return size;
+    }
+    public void placeQueen(int row, int col) {
+        board[row][col] = 1;
+    }
+    public void removeQueen(int row, int col) {
+        board[row][col] = 0;
+    }
+    public boolean isSafe(int row, int col) {
+        for (int i = 0; i < col; i++) {
+            if (board[row][i] == 1)
+                return false;
+        }
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 1)
+                return false;
+        }
+        for (int i = row, j = col; i < size && j >= 0; i++, j--) {
+            if (board[i][j] == 1)
+                return false;
+        }
+        return true;
+    }
+    public void printBoard() {
+        System.out.println("\nSolution:\n");
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+class NQueenSolver {
+    private Board board;
+    public NQueenSolver(Board board) {
+        this.board = board;
+    }
+    public boolean solve() {
+        return solve(0);
+    }
+    private boolean solve(int col) {
+        if (col >= board.getSize()) {
+            return true;
+        }
+        for (int row = 0; row < board.getSize(); row++) {
+            if (board.isSafe(row, col)) {
+                board.placeQueen(row, col);
+                if (solve(col + 1))
+                    return true;
+                board.removeQueen(row, col);
+            }
+        }
+        return false;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        int N = 4;
+        Board board = new Board(N);
+        NQueenSolver solver = new NQueenSolver(board);
+        if (solver.solve()) {
+            board.printBoard();
+        } else {
+            System.out.println("Solution does not exist");
+        }
+    }
+}
+
+----
+
+4. Generate All Subsets (Power Set) – Google(Leet code 78)
+import java.util.ArrayList;
+import java.util.List;
+public class Main {
+    static List<List<Integer>> result = new ArrayList<>();
+    public static void subsets(int[] nums, int index, List<Integer> current) {
+        if (index == nums.length) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+        subsets(nums, index + 1, current);
+        current.add(nums[index]);
+        subsets(nums, index + 1, current);
+        current.remove(current.size() - 1);
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2};
+        subsets(nums, 0, new ArrayList<>());
+        System.out.println(result);
+    }
+}
+
+----
+
+5. Permutations – Google / Amazon
+This is LeetCode 46 – Permutations.
+import java.util.ArrayList;
+import java.util.List;
+public class Main {
+    static List<List<Integer>> result = new ArrayList<>();
+    public static void permutations(int[] nums, List<Integer> current, boolean[] used) {
+        if (current.size() == nums.length) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i])
+                continue;
+            used[i] = true;
+            current.add(nums[i]);
+            permutations(nums, current, used);
+            current.remove(current.size() - 1);
+            used[i] = false;
+        }
+    }
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        boolean[] used = new boolean[nums.length];
+        permutations(nums, new ArrayList<>(), used);
+        for (List<Integer> permutation : result) {
+            System.out.println(permutation);
+        }
+    }
+}
+
+----
+
+6. Rat in a Maze – Amazon
+public class Main {
+    static int N = 4;
+    static int[][] maze = {
+            {1, 0, 0, 0},
+            {1, 1, 0, 1},
+            {0, 1, 0, 0},
+            {1, 1, 1, 1}
+    };
+    static int[][] path = new int[N][N];
+    static void solveMaze(int row, int col) {
+        if (row == N - 1 && col == N - 1) {
+            path[row][col] = 1;
+            printPath();
+            path[row][col] = 0;
+            return;
+        }
+        if (row < 0 || col < 0 || row >= N || col >= N)
+            return;
+        if (maze[row][col] == 0)
+            return;
+        maze[row][col] = 0;
+        path[row][col] = 1;
+        solveMaze(row + 1, col);
+        solveMaze(row, col + 1);
+        maze[row][col] = 1;
+        path[row][col] = 0;
+    }
+    static void printPath() {
+        System.out.println("Solution:");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(path[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        solveMaze(0, 0);
+    }
+}
+
+----
+
+7. Word Search (LeetCode 79) – Amazon
+public class Main {
+    public static boolean exist(char[][] board, String word) {
+        int rows = board.length;
+        int cols = board[0].length;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (backtrack(board, word, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    static boolean backtrack(char[][] board, String word,
+                             int row, int col, int index) {
+        if (index == word.length()) {
+            return true;
+        }
+        if (row < 0 || col < 0 ||
+            row >= board.length || col >= board[0].length ||
+            board[row][col] != word.charAt(index)) {
+            return false;
+        }
+        char temp = board[row][col];
+        board[row][col] = '#';
+        boolean found =
+                backtrack(board, word, row + 1, col, index + 1) ||
+                backtrack(board, word, row - 1, col, index + 1) ||
+                backtrack(board, word, row, col + 1, index + 1) ||
+                backtrack(board, word, row, col - 1, index + 1);
+        board[row][col] = temp;
+        return found;
+    }
+    public static void main(String[] args) {
+        char[][] board = {
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}
+        };
+        String word = "ABCCED";
+        System.out.println(exist(board, word));
+    }
+}
+
+----
+
+ 8. Generate Parentheses – Microsoft- LeetCode 22
+import java.util.ArrayList;
+import java.util.List;
+public class Main {
+    static List<String> result = new ArrayList<>();
+    public static void generateParenthesis(int n,
+                                           int open,
+                                           int close,
+                                           String current) {
+        if (open == n && close == n) {
+            result.add(current);
+            return;
+        }
+        if (open < n) {
+            generateParenthesis(n, open + 1, close, current + "(");
+        }
+        if (close < open) {
+            generateParenthesis(n, open, close + 1, current + ")");
+        }
+    }
+    public static void main(String[] args) {
+        int n = 3;
+        generateParenthesis(n, 0, 0, "");
+        System.out.println(result);
+    }
+}
+
+----
+
+9. Palindrome Partitioning – Meta (Leet code 131)
+import java.util.ArrayList;
+import java.util.List;
+public class Main {
+    static List<List<String>> result = new ArrayList<>();
+    public static void partition(String s, int start, List<String> current) {
+        if (start == s.length()) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+        for (int end = start + 1; end <= s.length(); end++) {
+            String sub = s.substring(start, end);
+            if (isPalindrome(sub)) {
+                current.add(sub);
+                partition(s, end, current);
+                current.remove(current.size() - 1);
+            }
+        }
+    }
+    public static boolean isPalindrome(String str) {
+        int left = 0;
+        int right = str.length() - 1;
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right))
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public static void main(String[] args) {
+        String s = "aab";
+        partition(s, 0, new ArrayList<>());
+        System.out.println(result);
+    }
+}
+
+----
+
+10. Combination Sum – Netflix / Airbnb- Leet Code 39
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    static List<List<Integer>> result = new ArrayList<>();
+    public static void combinationSum(int[] nums,
+                                      int target,
+                                      int start,
+                                      List<Integer> current,
+                                      int total) {
+
+        if (total == target) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+        if (total > target) {
+            return;
+        }
+        for (int i = start; i < nums.length; i++) {
+            current.add(nums[i]);
+            combinationSum(nums,
+                           target,
+                           i,
+                           current,
+                           total + nums[i]);
+
+            current.remove(current.size() - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 3, 6, 7};
+        int target = 7;
+        combinationSum(nums,
+                       target,
+                       0,
+                       new ArrayList<>(),
+                       0);
+        System.out.println(result);
+    }
+}
