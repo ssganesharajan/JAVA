@@ -1,0 +1,347 @@
+Product-based company interviews (Google, Microsoft, Amazon, 
+Apple, Meta, Adobe, Atlassian, Walmart Global Tech, Oracle, 
+Salesforce, Uber, Intuit, Cisco, JPMorgan Chase, Goldman Sachs,
+ etc.), you should master around 250–300 high-quality LeetCode 
+problems 
+
+1. Arrays (25)
+
+LC 1 – Two Sum
+LC 26 – Remove Duplicates from Sorted Array
+LC 27 – Remove Element
+LC 53 – Maximum Subarray
+LC 88 – Merge Sorted Array
+LC 121 – Best Time to Buy and Sell Stock
+LC 122 – Best Time to Buy and Sell Stock II
+LC 169 – Majority Element
+LC 189 – Rotate Array
+LC 217 – Contains Duplicate
+LC 238 – Product of Array Except Self
+LC 268 – Missing Number
+LC 283 – Move Zeroes
+LC 287 – Find Duplicate Number
+LC 41 – First Missing Positive
+LC 448 – Find All Numbers Disappeared
+LC 560 – Subarray Sum Equals K
+LC 525 – Contiguous Array
+LC 918 – Maximum Circular Subarray
+LC 128 – Longest Consecutive Sequence
+LC 287
+LC 73
+LC 54
+LC 48
+LC 289
+
+2. Strings (20)
+
+LC 13
+LC 14
+LC 28
+LC 58
+LC 125
+LC 242
+LC 344
+LC 387
+LC 409
+LC 49
+LC 151
+LC 5
+LC 3
+LC 424
+LC 76
+LC 438
+LC 567
+LC 680
+LC 647
+LC 131
+
+3. Two Pointers (10)
+
+LC 11
+LC 15
+LC 16
+LC 18
+LC 26
+LC 27
+LC 125
+LC 167
+LC 283
+LC 977
+
+4. Sliding Window (15)
+
+LC 3
+LC 76
+LC 209
+LC 239
+LC 424
+LC 438
+LC 567
+LC 1004
+LC 904
+LC 1493
+LC 1456
+LC 643
+LC 713
+LC 930
+LC 992
+
+5. Binary Search (15)
+
+LC 33
+LC 34
+LC 35
+LC 69
+LC 74
+LC 81
+LC 153
+LC 154
+LC 162
+LC 278
+LC 540
+LC 704
+LC 875
+LC 1011
+LC 410
+
+6. Stack (15)
+
+LC 20
+LC 71
+LC 84
+LC 85
+LC 150
+LC 155
+LC 224
+LC 227
+LC 394
+LC 402
+LC 496
+LC 503
+LC 739
+LC 901
+LC 907
+
+7. Queue / Deque (10)
+
+LC 225
+LC 232
+LC 239
+LC 346
+LC 641
+LC 622
+LC 649
+LC 933
+LC 950
+LC 1700
+
+8. Linked List (20)
+
+LC 2
+LC 19
+LC 21
+LC 23
+LC 24
+LC 25
+LC 61
+LC 82
+LC 83
+LC 86
+LC 92
+LC 138
+LC 141
+LC 142
+LC 143
+LC 148
+LC 160
+LC 206
+LC 234
+LC 876
+
+9. Trees (25)
+
+LC 94
+LC 98
+LC 100
+LC 101
+LC 102
+LC 103
+LC 104
+LC 105
+LC 106
+LC 110
+LC 112
+LC 113
+LC 114
+LC 124
+LC 129
+LC 144
+LC 145
+LC 199
+LC 226
+LC 230
+LC 235
+LC 236
+LC 257
+LC 543
+LC 662
+
+10. Heap / Priority Queue (12)
+
+LC 215
+LC 347
+LC 373
+LC 378
+LC 451
+LC 502
+LC 621
+LC 658
+LC 692
+LC 703
+LC 973
+LC 1046
+
+11. Greedy (15)
+
+LC 45
+LC 55
+LC 134
+LC 135
+LC 406
+LC 435
+LC 452
+LC 455
+LC 605
+LC 646
+LC 649
+LC 659
+LC 763
+LC 1029
+LC 1710
+
+12. Backtracking (15)
+
+LC 17
+LC 22
+LC 39
+LC 40
+LC 46
+LC 47
+LC 51
+LC 52
+LC 77
+LC 78
+LC 79
+LC 90
+LC 131
+LC 216
+LC 698
+
+13. Dynamic Programming (35)
+
+LC 70
+LC 62
+LC 63
+LC 64
+LC 91
+LC 120
+LC 139
+LC 152
+LC 198
+LC 213
+LC 221
+LC 279
+LC 300
+LC 309
+LC 322
+LC 337
+LC 343
+LC 377
+LC 416
+LC 494
+LC 518
+LC 583
+LC 647
+LC 673
+LC 714
+LC 746
+LC 931
+LC 983
+LC 1043
+LC 1143
+LC 1155
+LC 1312
+LC 1463
+LC 1639
+LC 188
+
+14. Graphs (25)
+
+LC 127
+LC 130
+LC 133
+LC 200
+LC 207
+LC 210
+LC 261
+LC 323
+LC 399
+LC 417
+LC 433
+LC 490
+LC 695
+LC 743
+LC 785
+LC 797
+LC 802
+LC 815
+LC 841
+LC 847
+LC 994
+LC 1091
+LC 1192
+LC 1584
+LC 1631
+
+15. Bit Manipulation (10)
+
+LC 136
+LC 137
+LC 190
+LC 191
+LC 201
+LC 231
+LC 268
+LC 318
+LC 338
+LC 421
+
+16. Trie (5)
+
+LC 208
+LC 211
+LC 212
+LC 421
+LC 648
+
+17. Union Find (6)
+
+LC 200
+LC 547
+LC 684
+LC 721
+LC 947
+LC 1319
+
+18. Design / LLD (10)
+
+LC 146 – LRU Cache
+LC 155 – Min Stack
+LC 208 – Trie
+LC 295 – Find Median from Data Stream
+LC 380 – Insert Delete GetRandom O(1)
+LC 460 – LFU Cache
+LC 622 – Circular Queue
+LC 641 – Circular Deque
+LC 705 – Design HashSet
+LC 706 – Design HashMap

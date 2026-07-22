@@ -1,0 +1,162 @@
+Greedy Logic
+1.Identify the objective (minimum or maximum).
+2.Sort the input if required.
+3.Start with an empty solution.
+4.For each element:
+If choosing the current element satisfies the condition, select it.
+Otherwise, skip it.1. 
+5.Continue until all elements are processed.
+6.Return the final solution.
+
+Generic Pseudocode
+GreedyAlgorithm(Input)
+    Sort the input (if required)
+    Initialize Result
+    For each element in Input
+        If element is a valid choice
+            Select the element
+            Update Result
+        End If
+    End For
+
+Greedy Problems:
+
+Activity Selection
+Fractional Knapsack
+Huffman Coding
+Minimum Number of Platforms
+Job Sequencing with Deadlines
+Kruskal's Algorithm (Minimum Spanning Tree)
+Prim's Algorithm (Minimum Spanning Tree)
+Dijkstra's Algorithm (Shortest Path with non-negative weights)
+Interval Scheduling
+Minimum Number of Arrows to Burst Balloons
+
+TIP
+Choose the locally optimal solution at every step, hoping it 
+leads to the globally optimal solution.
+
+Dynamic Programming (DP) Logic
+
+Dynamic Programming solves a problem by breaking it 
+into overlapping subproblems, solving each subproblem 
+only once, storing its result, and reusing it whenever needed.
+
+DP Logic
+
+1.Identify the state (what defines a subproblem).
+2.Define the DP array/table to store answers.
+3.Find the recurrence relation (transition formula).
+4.Identify the base case(s).
+5.Fill the DP table (Bottom-Up) 
+or use recursion with memoization (Top-Down).
+6.Return the final answer.
+
+Generic Pseudocode (Bottom-Up)
+
+    DynamicProgramming(Input)
+    Define DP array/table
+    Initialize Base Case(s)
+    For each state
+        DP[state] = Result computed from previously solved states
+    End For
+    Return DP[Final State]
+
+Generic Pseudocode (Top-Down / Memoization)
+
+Solve(State)
+    If State is already computed
+        Return stored value
+    If State is a Base Case
+        Return Base Case value
+    Compute answer using smaller subproblems
+    Store answer in DP table
+    Return answer
+
+DP Thinking Process !!!
+What is the state?
+What are the choices?
+Write the recurrence relation.
+Define the base case.
+Compute using memoization or tabulation.
+
+Dynamic Programming Problems
+
+Fibonacci Number
+Climbing Stairs
+House Robber
+Coin Change
+Longest Increasing Subsequence (LIS)
+Longest Common Subsequence (LCS)
+Edit Distance
+0/1 Knapsack
+Matrix Chain Multiplication
+Unique Paths
+Partition Equal Subset Sum
+Decode Ways
+Palindrome Partitioning
+Burst Balloons
+Egg Dropping
+
+TIP
+Solve each subproblem only once, store its answer, and 
+reuse it to avoid repeated computation.
+
+Backtracking Logic
+
+Backtracking is a technique that explores all possible solutions 
+by making a choice, recursively exploring it, and 
+undoing (backtracking) the choice if it doesn't lead to a
+valid solution.
+
+Backtracking Logic
+
+1.Start with an empty solution.
+2.Generate all possible choices.
+3.Choose one option.
+4.Check if the choice is valid.
+5.Recursively continue with the next choice.
+6.Undo the current choice (backtrack).
+7.Try the next possible choice.
+8.Repeat until all possibilities are explored.
+
+Generic Pseudocode
+
+Backtrack(CurrentSolution)
+    If CurrentSolution is a complete solution
+        Store/Print the solution
+        Return
+    For each possible choice
+        If choice is valid
+            Make the choice
+            Backtrack(CurrentSolution)
+            Undo the choice
+        End If
+    End For
+
+Backtracking Thinking Process
+
+What are the choices at each step?
+When is a solution complete?
+What makes a choice valid?
+How do I make a choice?
+How do I undo (backtrack) the choice?
+
+Backtracking Problems
+
+Subsets
+Permutations
+Combination Sum
+N-Queens
+Sudoku Solver
+Rat in a Maze
+Word Search
+Palindrome Partitioning
+Letter Combinations of a Phone Number
+Restore IP Addresses
+Generate Parentheses
+Partition to K Equal Sum Subsets
+
+TIP
+Choose → Explore → Backtrack (Undo) → Try the next choice.
+
